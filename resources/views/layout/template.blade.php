@@ -158,9 +158,10 @@
 					</div>
 				</div>
 		</header>
-
-		<div class="gtco-container">
-			@yield('content')
+		<div class="gtco-section">
+			<div class="gtco-container">
+				@yield('content')
+			</div>
 		</div>
 
 		<div id="gtco-features">
