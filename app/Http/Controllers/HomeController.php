@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WaterSport;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $watersport = WaterSport::all();
+        return view('home', compact('watersport'));
     }
 
     public function home()

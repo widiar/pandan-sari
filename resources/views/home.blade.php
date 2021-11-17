@@ -37,6 +37,13 @@ Home Pandan Sari Dive & Water Sport
 	.link {
 		margin-bottom: 20px;
 	}
+
+	.img-crop {
+		object-fit: cover;
+		object-position: center;
+		height: 250px;
+		width: 100%;
+	}
 </style>
 @endsection
 
@@ -56,16 +63,18 @@ Home Pandan Sari Dive & Water Sport
 </div>
 
 <div class="row">
+	@foreach ($watersport as $data)
 	<div class="col-lg-4 col-md-4 col-sm-6">
 		<div class="fh5co-card-item">
-			<a href="{{asset('gambar/parasailing.jpg')}}" class="image-popup">
+			<a href="{{ Storage::url('water-sport/' . $data->image) }}" class="image-popup">
 				<figure>
 					<div class="overlay"><i class="ti-plus"></i></div>
-					<img src="{{asset('gambar/parasailing.jpg')}}" alt="Image" class="img-responsive">
+					<img src="{{ Storage::url('water-sport/' . $data->image) }}" alt="Image"
+						class="img-responsive img-crop">
 				</figure>
 				<div class="fh5co-text">
-					<h2>Parasailing</h2>
-					<p>Permainan yang memadukan antara terjun payung dan jetski di Water Sports.</p>
+					<h2>{{ $data->nama }}</h2>
+					<p>{{ $data->deskripsi }}</p>
 				</div>
 			</a>
 			<div class="link" style="text-align: center">
@@ -73,75 +82,7 @@ Home Pandan Sari Dive & Water Sport
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-4 col-md-4 col-sm-6">
-		<a href="{{asset('template')}}/images/img_2.jpg" class="fh5co-card-item image-popup">
-			<figure>
-				<div class="overlay"><i class="ti-plus"></i></div>
-				<img src="{{asset('/gambar/latar.jpg')}}" alt="Image" class="img-responsive">
-			</figure>
-			<div class="fh5co-text">
-				<h2>Banana Boat</h2>
-				<p>Permainan berbentuk pisang yang akan dinaiki dan di tarik oleh speed boat.</p>
-				<p><span class="btn btn-primary">Read more</span></p>
-			</div>
-		</a>
-	</div>
-	<div class="col-lg-4 col-md-4 col-sm-6">
-		<a href="{{asset('template')}}/images/img_3.jpg" class="fh5co-card-item image-popup">
-			<figure>
-				<div class="overlay"><i class="ti-plus"></i></div>
-				<img src="{{asset('/gambar/parasailing.jpg')}}" alt="Image" class="img-responsive">
-			</figure>
-			<div class="fh5co-text">
-				<h2>Seawalker</h2>
-				<p>Aktivitas melihat keindahan pemandangan bawah laut tanpa harus berenang.</p>
-				<p><span class="btn btn-primary">Read more</span></p>
-			</div>
-		</a>
-	</div>
-
-
-	<div class="col-lg-4 col-md-4 col-sm-6">
-		<a href="{{asset('/images/img_4.jpg')}}" class="fh5co-card-item image-popup">
-			<figure>
-				<div class="overlay"><i class="ti-plus"></i></div>
-				<img src="{{asset('/gambar/latar.jpg')}}" alt="Image" class="img-responsive">
-			</figure>
-			<div class="fh5co-text">
-				<h2>Scuba Diving</h2>
-				<p>Kegiatan menyelam di bawah permukaan air menggunakan alat bantu pernafasan dengan tabung udara.</p>
-				<p><span class="btn btn-primary">Read more</span></p>
-			</div>
-		</a>
-	</div>
-
-	<div class="col-lg-4 col-md-4 col-sm-6">
-		<a href="{{asset('/images/img_5.jpg')}}" class="fh5co-card-item image-popup">
-			<figure>
-				<div class="overlay"><i class="ti-plus"></i></div>
-				<img src="{{asset('/gambar/parasailing.jpg')}}" alt="Image" class="img-responsive">
-			</figure>
-			<div class="fh5co-text">
-				<h2>Jet Ski</h2>
-				<p>Olahraga air yang dilengkapi dengan jaket pelampung dan ditemani oleh pemandu jetski profesional.</p>
-				<p><span class="btn btn-primary">Read more</span></p>
-			</div>
-		</a>
-	</div>
-
-	<div class="col-lg-4 col-md-4 col-sm-6">
-		<a href="{{asset('/images/img_6.jpg')}}" class="fh5co-card-item image-popup">
-			<figure>
-				<div class="overlay"><i class="ti-plus"></i></div>
-				<img src="{{asset('/gambar/latar.jpg')}}" alt="Image" class="img-responsive">
-			</figure>
-			<div class="fh5co-text">
-				<h2>Flying Fish</h2>
-				<p>Roket air yang menyediakan daya dorong untuk flyboard di udara menggunakan udara dan air. </p>
-				<p><span class="btn btn-primary">Read more</span></p>
-			</div>
-		</a>
-	</div>
+	@endforeach
 </div>
 
 @endsection
