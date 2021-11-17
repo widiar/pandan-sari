@@ -40,6 +40,10 @@ Home Pandan Sari Dive & Water Sport
 </style>
 @endsection
 
+@section('header')
+@include('layout.headerLogin')
+@endsection
+
 @section('content')
 <div class="info gtco-heading">
 	<div class="col-lg-6 col-md-6">
@@ -139,4 +143,21 @@ Home Pandan Sari Dive & Water Sport
 		</a>
 	</div>
 </div>
+
+@endsection
+
+@section('script')
+<script>
+	$(document).ready(function() {
+		$('#form-signup').submit(function(e){
+			const pw1 = $('#pw1').val()
+			const pw2 = $('#pw2').val()
+			if(pw1 !== pw2) {
+				e.preventDefault()
+				toastr.info('Password tidak sama!', 'Password')
+				return false;
+			}
+		})
+	})
+</script>
 @endsection

@@ -15,13 +15,15 @@
 						<li class="{{ request()->is('/') ? 'active' : ''}}"><a href="/">Home</a></li>
 						<li class="{{ request()->is('booking') ? 'active' : ''}}"><a href="booking">Booking</a></li>
 						<li class="{{ request()->is('gallery') ? 'active' : ''}}"><a href="gallery">Gallery</a></li>
+						@auth
 						<li class="has-dropdown">
 							<a href="#">Account</a>
 							<ul class="dropdown" style="display: none;">
 								<li><a href="#">My Profile</a></li>
-								<li><a href="#">Logout</a></li>
+								<li><a href="{{ route('logout') }}">Logout</a></li>
 							</ul>
 						</li>
+						@endauth
 						<li class="{{ request()->is('aboutus') ? 'active' : ''}}"><a href="aboutus">About Us</a></li>
 						<li class="{{ request()->is('contact') ? 'active' : ''}}"><a href="contact">Contact</a></li>
 					</ul>

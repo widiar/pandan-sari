@@ -43,6 +43,8 @@
 	<link rel="stylesheet" href="{{asset('template')}}/css/owl.carousel.min.css">
 	<link rel="stylesheet" href="{{asset('template')}}/css/owl.theme.default.min.css">
 
+	<link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.css') }}">
+
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="{{asset('template')}}/css/style.css">
 
@@ -63,101 +65,8 @@
 
 		@include('layout.nav')
 
-		<header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner"
-			style="background-image: url(gambar/latar.jpg)">
-			<div class="overlay"></div>
-			<div class="gtco-container">
-				<div class="row">
-					<div class="col-md-12 col-md-offset-6.5 text-center">
+		@yield('header')
 
-						<div class="row row-mt-15em">
-							<div class="logout">
-								<div class="col-md-4 animate-box" data-animate-effect="fadeInRight">
-									<div class="form-wrap">
-										<div class="tab">
-											<ul class="tab-menu">
-												<li class="active gtco-first"><a href="#" data-tab="signup">Sign up</a>
-												</li>
-												<li class="gtco-second"><a href="#" data-tab="login">Login</a></li>
-											</ul>
-											<div class="tab-content">
-												<div class="tab-content-inner active" data-content="signup">
-													<form action="#">
-														<div class="row form-group">
-															<div class="col-md-12">
-																<label for="username">Email</label>
-																<input type="text" class="form-control" id="username">
-															</div>
-														</div>
-														<div class="row form-group">
-															<div class="col-md-12">
-																<label for="password">Password</label>
-																<input type="password" class="form-control"
-																	id="password">
-															</div>
-														</div>
-														<div class="row form-group">
-															<div class="col-md-12">
-																<label for="password2">Repeat Password</label>
-																<input type="password" class="form-control"
-																	id="password2">
-															</div>
-														</div>
-
-														<div class="row form-group">
-															<div class="col-md-12">
-																<input type="submit" class="btn btn-primary"
-																	value="Sign up">
-															</div>
-														</div>
-													</form>
-												</div>
-
-												<div class="tab-content-inner" data-content="login">
-													<form action="#">
-														<div class="row form-group">
-															<div class="col-md-12">
-																<label for="username">Email</label>
-																<input type="text" class="form-control" id="username">
-															</div>
-														</div>
-														<div class="row form-group">
-															<div class="col-md-12">
-																<label for="password">Password</label>
-																<input type="password" class="form-control"
-																	id="password">
-															</div>
-														</div>
-
-														<div class="row form-group">
-															<div class="col-md-12">
-																<input type="submit" class="btn btn-primary"
-																	value="Login">
-															</div>
-														</div>
-													</form>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-7 col-md-push-1 mt-text animate-box" data-animate-effect="fadeInUp">
-									<h1>PANDAN SARI</h1>
-									<span class="intro-text-small">Dive & Watersport</span>
-								</div>
-							</div>
-
-							<div class="login" style="display: none">
-								<div class="col-md-12 mt-text animate-box" data-animate-effect="fadeInUp">
-									<h1>PANDAN SARI</h1>
-									<span class="intro-text-small">Dive & Watersport</span>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-		</header>
 		<div class="gtco-section">
 			<div class="gtco-container">
 				@yield('content')
@@ -311,9 +220,21 @@
 	<!-- Datepicker -->
 	<script src="{{asset('template')}}/js/bootstrap-datepicker.min.js"></script>
 
+	<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 
 	<!-- Main -->
 	<script src="{{asset('template')}}/js/main.js"></script>
+
+	<script>
+		toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+        }
+	</script>
+
+	@yield('script')
 
 </body>
 
