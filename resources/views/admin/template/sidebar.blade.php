@@ -30,7 +30,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link{{request()->is('admin/banner') ? ' active' : '' }}">
+                    <a href="{{ route('admin.water-sport.index') }}"
+                        class="nav-link{{request()->is('admin/water-sport*') ? ' active' : '' }}">
                         <i class="nav-icon fas fa-image"></i>
                         <p>
                             Informasi WaterSport

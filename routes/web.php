@@ -8,6 +8,7 @@ use App\Http\Controllers\AboutusController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\WaterSportController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/booking', [BookingController::class, 'booking']);
@@ -32,6 +33,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
                 return redirect()->route('admin.login');
             });
             Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+            Route::resource('water-sport', WaterSportController::class);
         });
     });
 });
