@@ -14,9 +14,24 @@ Route::get('/booking', [BookingController::class, 'booking']);
 Route::get('/gallery', [GalleryController::class, 'gallery']);
 Route::get('/aboutus', [AboutusController::class, 'aboutus']);
 Route::get('/contact', [ContactController::class, 'contact']);
-Route::get('/admin', [AdminController::class, 'admin']);
 
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::get('confirm-email', [AuthController::class, 'confirm'])->name('confirm');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('admin/login', function () {
+    return view('admin.login');
+})->name('admin.login');
+Route::post('/admin/login', [AdminController::class, 'login']);
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::name('admin.')->group(function () {
+        Route::prefix('/admin')->group(function () {
+            Route::get('/', function () {
+                return redirect()->route('admin.login');
+            });
+            Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        });
+    });
+});

@@ -35,8 +35,8 @@
                 <form action="" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control @error('username') is-invalid @enderror" name="username"
-                            placeholder="Username" value="{{ old('username') }}">
+                        <input type="text" required class="form-control @error('username') is-invalid @enderror"
+                            name="username" placeholder="Username" value="{{ old('username') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -47,7 +47,7 @@
                         @enderror
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                        <input type="password" required class="form-control @error('password') is-invalid @enderror"
                             name="password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
