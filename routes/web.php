@@ -9,7 +9,6 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminController;
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/home', [HomeController::class, 'home']);
 Route::get('/booking', [BookingController::class, 'booking']);
 Route::get('/gallery', [GalleryController::class, 'gallery']);
 Route::get('/aboutus', [AboutusController::class, 'aboutus']);

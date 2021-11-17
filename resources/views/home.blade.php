@@ -33,6 +33,10 @@ Home Pandan Sari Dive & Water Sport
 		background: #1a1a1a;
 		border: 2px solid #1a1a1a !important;
 	}
+
+	.link {
+		margin-bottom: 20px;
+	}
 </style>
 @endsection
 
@@ -50,10 +54,10 @@ Home Pandan Sari Dive & Water Sport
 <div class="row">
 	<div class="col-lg-4 col-md-4 col-sm-6">
 		<div class="fh5co-card-item">
-			<a href="{{asset('/picture/parasailing.jpg')}}" class="image-popup">
+			<a href="{{asset('gambar/parasailing.jpg')}}" class="image-popup">
 				<figure>
 					<div class="overlay"><i class="ti-plus"></i></div>
-					<img src="{{asset('/gambar/parasailing.jpg')}}" alt="Image" class="img-responsive">
+					<img src="{{asset('gambar/parasailing.jpg')}}" alt="Image" class="img-responsive">
 				</figure>
 				<div class="fh5co-text">
 					<h2>Parasailing</h2>
