@@ -34,4 +34,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

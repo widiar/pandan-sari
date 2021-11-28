@@ -83,20 +83,19 @@ Home Pandan Sari Dive & Water Sport
 <h3>Harga Tiket Rp. {{ $data->harga }}</h3>
 <h4>Minimal : {{ $data->minimal }} Orang</h4>
 
-<form action="" method="POST">
+<form action="{{ route('add.booking') }}" method="POST">
     @csrf
     <div class="form-group">
         <label for="">Tanggal</label>
-        <input required type="date" class="form-control">
+        <input name="tanggal" required type="date" class="form-control">
     </div>
     <div class="form-group">
         <label for="">Jumlah Orang</label>
-        <input required type="text" class="form-control">
+        <input name="orang" required min="{{ $data->minimal }}" type="number" class="form-control orang">
     </div>
-    <div class="form-group">
-        <label for="">Nama</label>
-        <input type="text" class="form-control">
-    </div>
+    <h3>Total Harga: Rp. <span id="total"></span></h3>
+    <input type="hidden" name="total">
+    <input type="hidden" name="watersport" value="{{ $data->id }}">
     <button type="submit" class="btn btn-primary btn-block">Booking</button>
 </form>
 
@@ -105,5 +104,34 @@ Home Pandan Sari Dive & Water Sport
 
 @section('script')
 <script>
+    let harga = `{{ $data->harga }}`
+    $('.orang').keyup(function(){
+        const total = $(this).val() * parseInt(harga)
+        $('#total').text(total)
+        $('input[name="total"]').val(total)
+    })
+
+    $('form').submit(function(e){
+        e.preventDefault()
+
+        $.ajax({
+            method: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: (res) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil Membuat booking',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((res) => {
+                    window.location.href = ''
+                })
+            },
+            fail: (res) => {
+                alert(res)
+            }
+        })
+    })
 </script>
 @endsection

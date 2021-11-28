@@ -13,7 +13,8 @@
 				<div class="col-xs-8 text-right menu-1">
 					<ul>
 						<li class="{{ request()->is('/') ? 'active' : ''}}"><a href="/">Home</a></li>
-						<li class="{{ request()->is('booking') ? 'active' : ''}}"><a href="booking">Booking</a></li>
+						<li class="{{ request()->is('booking') ? 'active' : ''}}"><a href="booking">Booking <span
+									class="badge badge-warning count-booking">{{ session('booking') }}</span></a></li>
 						<li class="{{ request()->is('gallery') ? 'active' : ''}}"><a href="gallery">Gallery</a></li>
 						@auth
 						<li class="has-dropdown">

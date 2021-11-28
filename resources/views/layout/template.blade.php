@@ -43,6 +43,8 @@
 	<link rel="stylesheet" href="{{asset('template')}}/css/owl.carousel.min.css">
 	<link rel="stylesheet" href="{{asset('template')}}/css/owl.theme.default.min.css">
 
+	<script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
 	<link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.css') }}">
 
 	<!-- Theme style  -->

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ConfirmEmail;
+use App\Models\Cart;
 use App\Models\TokenUser;
 use App\Models\User;
 use DateTime;
@@ -60,15 +61,19 @@ class AuthController extends Controller
                 Auth::logout();
                 return redirect()->route('home')->with('error', 'Akun anda belum di verifikasi.')->withInput();
             } else {
+                $booking = Cart::where('user_id', $user->id)->where('status', 'unpaid')->get()->count();
+                $request->session()->put('booking', $booking);
                 return redirect()->route('home');
             }
         } else {
             return redirect()->route('home')->with('error', 'Email atau Password anda salah')->withInput();
         }
     }
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+        $request->session()->forget('booking');
+        $request->session()->flush();
         return redirect()->route('home');
     }
 }

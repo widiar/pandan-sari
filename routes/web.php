@@ -27,6 +27,7 @@ Route::get('admin/login', function () {
 Route::post('/admin/login', [AdminController::class, 'login']);
 
 Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
+Route::post('booking/add', [BookingController::class, 'add'])->name('add.booking');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::name('admin.')->group(function () {
