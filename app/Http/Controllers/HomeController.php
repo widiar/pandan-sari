@@ -22,4 +22,10 @@ class HomeController extends Controller
     {
         return view('public.contact');
     }
+
+    public function detail($id)
+    {
+        $data = WaterSport::findOrFail($id);
+        return view('detail', compact('data'));
+    }
 }

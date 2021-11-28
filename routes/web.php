@@ -26,6 +26,8 @@ Route::get('admin/login', function () {
 })->name('admin.login');
 Route::post('/admin/login', [AdminController::class, 'login']);
 
+Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
+
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::name('admin.')->group(function () {
         Route::prefix('/admin')->group(function () {

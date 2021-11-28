@@ -78,7 +78,8 @@ Home Pandan Sari Dive & Water Sport
 				</div>
 			</a>
 			<div class="link" style="text-align: center">
-				<a href="#"><button class="btn btn-primary btn-read">Read more</button></a>
+				<a href="{{ route('detail', $data->id) }}"><button class="btn btn-primary btn-read">Read
+						more</button></a>
 			</div>
 		</div>
 	</div>
