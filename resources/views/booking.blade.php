@@ -48,7 +48,7 @@ Home Pandan Sari Dive & Water Sport
     }
 
     .img-crop {
-        width: 100%;
+        width: 180px;
         object-fit: cover;
         object-position: center;
         height: 120px;
@@ -196,6 +196,7 @@ Home Pandan Sari Dive & Water Sport
 
         .img-crop {
             height: 200px;
+            width: 100%;
         }
 
         .checkout {
@@ -234,64 +235,119 @@ Home Pandan Sari Dive & Water Sport
 
 @section('content')
 
+@auth
 <div class="header-date">
     <h3 class="date"></h3>
     <h5 class="remove-all">Remove All</h5>
 </div>
 
+@php
+$total = 0;
+@endphp
+@foreach ($carts as $cart)
+@php
+$total += $cart->total;
+@endphp
 <div class="cart-items">
     <div class="image-box">
-        <img class="img-thumbnail img-crop" src="{{asset('/gambar/parasailing.jpg')}}" alt="">
+        <img class="img-thumbnail img-crop" src="{{ Storage::url('water-sport/' . $cart->watersport->image) }}" alt="">
     </div>
     <div class="cart-title">
-        <h1>Paralayang</h1>
-        <h3 class="cart-subtitle">12 November 2021</h3>
+        <h1>{{ $cart->watersport->nama }}</h1>
+        <h3 class="cart-subtitle">{{ $cart->tanggal }}</h3>
     </div>
-    <div class="counter">
-        <div class="btn-counter">+</div>
-        <div class="counter-cart">2</div>
-        <div class="btn-counter">-</div>
+    <div class="counter" data-id="{{ $cart->id }}">
+        <div class="btn-counter btn-plus">+</div>
+        <div class="counter-cart">{{ $cart->jumlah }}</div>
+        <div class="btn-counter btn-minus">-</div>
     </div>
     <div class="prices">
-        <div class="amount">Rp 2,000,000</div>
+        <div class="amount">Rp <span class="amount_rp">{{ number_format($cart->total, 0, ',', '.') }}</span></div>
         <div class="remove"><u>Remove</u></div>
     </div>
 </div>
+@if (!$loop->last)
 <hr>
-<div class="cart-items">
-    <div class="image-box">
-        <img class="img-thumbnail img-crop" src="{{asset('/gambar/parasailing.jpg')}}" alt="">
-    </div>
-    <div class="cart-title">
-        <h1>Paralayang</h1>
-        <h3 class="cart-subtitle">12 November 2021</h3>
-    </div>
-    <div class="counter">
-        <div class="btn-counter">+</div>
-        <div class="counter-cart">2</div>
-        <div class="btn-counter">-</div>
-    </div>
-    <div class="prices">
-        <div class="amount">Rp 2,000,000</div>
-        <div class="remove"><u>Remove</u></div>
-    </div>
-</div>
+@endif
+@endforeach
 
 <hr class="hr-checkout">
 <div class="checkout">
     <div class="total">
-        <div>
-            <div class="subtotal">Sub-Total</div>
-            <div class="count-items">2 Watersport</div>
-        </div>
-        <div class="total-amount">Rp 4,000,000</div>
+        <div class="subtotal">Sub-Total</div>
+        <div class="total-amount">Rp <span class="total-amount_rp">{{ number_format($total, 0, ',', '.') }}</span></div>
     </div>
     <button class="btn btn-success btn-block">Pembayaran</button>
 </div>
+@endauth
+
+@guest
+<h1 class="text-center">Silahkan Login Terlebih Dahulu</h1>
+@endguest
 
 @endsection
 
 @section('script')
 <script>
+    const urlChange = `{{ route('change.booking') }}`
+
+    const checkMinus = () => {
+        $('.counter-cart').each(function() {
+            const parent = $(this).parent()
+            let counterCart = parseInt($(this).text())
+            if(counterCart <= 1){
+                parent.find('.btn-minus').css('cursor', 'not-allowed')
+            } else {
+                parent.find('.btn-minus').css('cursor', 'pointer')
+            }
+        })
+    }
+
+    checkMinus()
+
+    const counter = (pr, count) => {
+        const parent = pr.parent()
+        const idCart = parent.data('id')
+        let counterCart = parseInt(parent.find('.counter-cart').text())
+        Swal.fire({
+            title: 'Loading',
+            timer: 2000,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+                Swal.showLoading()
+                Swal.stopTimer()
+                $.ajax({
+                    url: urlChange,
+                    method: 'POST',
+                    data: {
+                        id: idCart,
+                        jumlah: count,
+                    },
+                    complete: () => {
+                        Swal.close()
+                    },
+                    success: (res) => {
+                        console.log(res)
+                        counterCart += count;
+                        parent.find('.counter-cart').text(counterCart)
+                        checkMinus()
+                    }
+                })
+            }
+        })
+    }
+
+    $('.btn-plus').click(function(){
+        counter($(this), 1)
+    })
+    $('.btn-minus').click(function(e){
+        const cnt = parseInt($(this).parent().find('.counter-cart').text())
+        if(cnt <= 1) {
+            e.preventDefault()
+        }else{
+            counter($(this), -1)
+        }
+    })
 </script>
 @endsection

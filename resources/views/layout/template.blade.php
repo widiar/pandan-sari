@@ -10,6 +10,7 @@
 	<meta name="keywords"
 		content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FreeHTML5.co" />
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!-- Facebook and Twitter integration -->
 	<meta property="og:title" content="" />
@@ -194,6 +195,11 @@
             "positionClass": "toast-top-right",
             "preventDuplicates": false,
         }
+		$.ajaxSetup({
+			headers: {
+				"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+			},
+		});
 	</script>
 
 	@yield('script')
