@@ -11,7 +11,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WaterSportController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/booking', [BookingController::class, 'booking']);
+Route::get('booking', [BookingController::class, 'booking'])->name('booking');
 Route::get('/gallery', [GalleryController::class, 'gallery']);
 Route::get('/aboutus', [AboutusController::class, 'aboutus']);
 Route::get('/contact', [ContactController::class, 'contact']);

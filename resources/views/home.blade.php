@@ -85,7 +85,10 @@ Home Pandan Sari Dive & Water Sport
 	</div>
 	@endforeach
 </div>
+@endsection
 
+@section('about')
+@include('layout.about')
 @endsection
 
 @section('script')

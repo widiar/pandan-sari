@@ -24,6 +24,8 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
 
+	<link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="{{asset('template')}}/css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -75,49 +77,7 @@
 			</div>
 		</div>
 
-		<div id="gtco-features">
-			<div class="gtco-container">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
-						<h2>About Us</h2>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-							provident. Odit ab aliquam dolor eius.</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-6">
-						<div class="feature-center animate-box" data-animate-effect="fadeIn">
-							<span class="icon">
-								<i>1</i>
-							</span>
-							<h3>Lorem ipsum dolor sit amet</h3>
-							<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-								provident. Odit ab aliquam dolor eius.</p>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6">
-						<div class="feature-center animate-box" data-animate-effect="fadeIn">
-							<span class="icon">
-								<i>2</i>
-							</span>
-							<h3>Consectetur adipisicing elit</h3>
-							<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-								provident. Odit ab aliquam dolor eius.</p>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6">
-						<div class="feature-center animate-box" data-animate-effect="fadeIn">
-							<span class="icon">
-								<i>3</i>
-							</span>
-							<h3>Dignissimos asperiores vitae</h3>
-							<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-								provident. Odit ab aliquam dolor eius.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		@yield('about')
 
 		<!-- footer -->
 		<footer id="gtco-footer" role="contentinfo">

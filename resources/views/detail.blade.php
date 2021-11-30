@@ -83,6 +83,15 @@ Home Pandan Sari Dive & Water Sport
 <h3>Harga Tiket Rp. {{ $data->harga }}</h3>
 <h4>Minimal : {{ $data->minimal }} Orang</h4>
 
+@guest
+<hr>
+<a href="{{ route('home') }}">
+    <button class="text-center btn btn-danger btn-block">Silahkan Login Terlebih Dahulu Untuk Melakukan Booking</button>
+</a>
+<hr>
+@endguest
+
+@auth
 <form action="{{ route('add.booking') }}" method="POST">
     @csrf
     <div class="form-group">
@@ -98,8 +107,12 @@ Home Pandan Sari Dive & Water Sport
     <input type="hidden" name="watersport" value="{{ $data->id }}">
     <button type="submit" class="btn btn-primary btn-block">Booking</button>
 </form>
+@endauth
 
+@endsection
 
+@section('about')
+@include('layout.about')
 @endsection
 
 @section('script')
