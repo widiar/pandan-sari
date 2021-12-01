@@ -30,6 +30,8 @@ Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
 Route::post('booking/add', [BookingController::class, 'add'])->name('add.booking');
 Route::post('booking/change/amount', [BookingController::class, 'change'])->name('change.booking');
 Route::post('booking/delete', [BookingController::class, 'delete'])->name('delete.booking');
+Route::post('booking/delete/all', [BookingController::class, 'deleteAll'])->name('delete.all.booking');
+Route::post('booking/post/identitas', [BookingController::class, 'identitas'])->name('identitas');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::name('admin.')->group(function () {

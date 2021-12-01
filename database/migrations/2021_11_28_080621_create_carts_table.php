@@ -18,8 +18,8 @@ class CreateCartsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedBigInteger('watersport_id');
             $table->date('tanggal');
-            $table->integer('jumlah');
-            $table->decimal('total', 12, 2);
+            $table->integer('jumlah')->nullable();
+            $table->decimal('total', 12, 2)->nullable();
             $table->string('status')->default('unpaid');
             $table->unsignedBigInteger('invoice_id')->nullable();
             $table->timestamps();
