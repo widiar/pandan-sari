@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\WaterSport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,13 +11,17 @@ class BookingController extends Controller
 {
     public function booking()
     {
-        $user = Auth::user();
-        $user->load(['cart' => function ($q) {
-            $q->where('status', 'unpaid')->orderBy('tanggal');
-        }]);
-        $carts = $user->cart;
-        $carts->load('watersport');
-        return view('booking', compact('carts'));
+        if (Auth::check()) {
+            $user = Auth::user();
+            $user->load(['cart' => function ($q) {
+                $q->where('status', 'unpaid')->orderBy('tanggal');
+            }]);
+            $carts = $user->cart;
+            $carts->load('watersport');
+            return view('booking', compact('carts'));
+        } else {
+            return view('booking');
+        }
     }
 
     public function add(Request $request)
@@ -45,8 +50,26 @@ class BookingController extends Controller
         $id = $request->id;
         $jumlah = $request->jumlah;
         $cart = Cart::find($id);
-        $cart->jumlah = $cart->jumlah + $jumlah;
+        $watersport = WaterSport::find($cart->watersport_id);
+        $jml = $cart->jumlah + $jumlah;
+        $cart->jumlah = $jml;
+        $cart->total = $watersport->harga * $jml;
         $cart->save();
-        return response()->json('Sukses');
+        return response()->json([
+            'total' => $watersport->harga * $jml,
+        ]);
+    }
+
+    public function delete(Request $request)
+    {
+        $id = $request->id;
+        $cart = Cart::find($id);
+        $cart->delete();
+        $user = Auth::user();
+        $booking = Cart::where('user_id', $user->id)->where('status', 'unpaid')->get()->count();
+        $request->session()->put('booking', $booking);
+        return response()->json([
+            'booking' => $booking
+        ]);
     }
 }
