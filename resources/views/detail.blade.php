@@ -105,6 +105,7 @@ Home Pandan Sari Dive & Water Sport
     <h3>Total Harga: Rp. <span id="total"></span></h3>
     <input type="hidden" name="total">
     <input type="hidden" name="watersport" value="{{ $data->id }}">
+    <input type="hidden" name="satuan" value="{{ $data->harga }}">
     <button type="submit" class="btn btn-primary btn-block">Booking</button>
 </form>
 @endauth

@@ -284,7 +284,9 @@ Home Pandan Sari Dive & Water Sport
                 alt="">
         </div>
         <div class="cart-title">
-            <h1>{{ $cart->watersport->nama }}</h1>
+            <a href="{{ route('detail', $cart->watersport_id) }}">
+                <h1>{{ $cart->watersport->nama }}</h1>
+            </a>
             <h3 class="cart-subtitle">{{ $cart->tanggal }}</h3>
         </div>
         <div class="counter" data-id="{{ $cart->id }}" data-minimal="{{ $cart->watersport->minimal }}">
@@ -507,13 +509,6 @@ Home Pandan Sari Dive & Water Sport
                 })
             }
         })
-    }
-
-    function toRupiah(value) {
-        let reverse = value.toString().split('').reverse().join('')
-        let val = reverse.match(/\d{1,3}/g)
-        val = val.join('.').split('').reverse().join('')
-        return val
     }
 
     $('.btn-plus').click(function(){

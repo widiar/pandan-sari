@@ -19,6 +19,10 @@ class BookingController extends Controller
                 $q->where('status', 'unpaid')->orderBy('tanggal');
             }]);
             $carts = $user->cart;
+            foreach ($carts as $cart) {
+                $cart->total = $cart->jumlah * $cart->satuan;
+                $cart->save();
+            }
             $carts->load('watersport');
             return view('booking', compact('carts', 'user'));
         } else {
@@ -39,9 +43,11 @@ class BookingController extends Controller
             if ($cart->jumlah) {
                 $cart->jumlah = $cart->jumlah + $request->orang;
                 $cart->total = $cart->total + $request->total;
+                $cart->satuan = $request->satuan;
             } else {
                 $cart->jumlah = $request->orang;
                 $cart->total = $request->total;
+                $cart->satuan = $request->satuan;
                 $booking = $request->session()->get('booking');
                 $booking += 1;
                 $request->session()->put('booking', $booking);
@@ -106,9 +112,9 @@ class BookingController extends Controller
     {
         $tgl = date('d/m/Y');
         $user = User::find(Auth::user()->id);
-        $inv = uniqid('INV/' . $tgl . '/');
+        $inv = uniqid('INV/');
         $bukti = $request->bukti;
-        Invoice::create([
+        $invoice = Invoice::create([
             'user_id' => $user->id,
             'nomor' => $inv,
             'bukti_bayar' => $bukti->hashName(),
@@ -117,10 +123,23 @@ class BookingController extends Controller
         ]);
         $bukti->storeAs('public/bukti-bayar', $bukti->hashName());
         //update cart
-        Cart::where('user_id', $user->id)->where('status', 'unpaid')->update(['status' => 'payment-unverifed']);
+        Cart::where('user_id', $user->id)->where('status', 'unpaid')->update(['status' => 'payment-unverifed', 'invoice_id' => $invoice->id]);
         //update sesion
         $booking = Cart::where('user_id', $user->id)->where('status', 'unpaid')->get()->count();
         $request->session()->put('booking', $booking);
         return response()->json('Success');
+    }
+
+    public function detailInvoice(Request $request)
+    {
+        $id = $request->id;
+        $invoice = Invoice::find($id);
+        $invoice->load('cart');
+        $cart = $invoice->cart;
+        $cart->load('watersport');
+        return response()->json([
+            'data' => $cart,
+            'total' => $invoice->total
+        ]);
     }
 }

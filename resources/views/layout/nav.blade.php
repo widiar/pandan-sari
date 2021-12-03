@@ -23,6 +23,7 @@
 						<li class="has-dropdown">
 							<a href="#">Account</a>
 							<ul class="dropdown" style="display: none;">
+								<li><a href="{{ route('transaksi') }}">Transaksi</a></li>
 								<li><a href="#">My Profile</a></li>
 								<li><a href="{{ route('logout') }}">Logout</a></li>
 							</ul>

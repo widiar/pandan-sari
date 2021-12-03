@@ -10,4 +10,9 @@ class Invoice extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class, 'invoice_id');
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WaterSportRequest;
+use App\Models\Cart;
 use App\Models\WaterSport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -93,6 +94,7 @@ class WaterSportController extends Controller
             $foto->storeAs('public/water-sport', $foto->hashName());
             $data->image = $foto->hashName();
         }
+        Cart::where('watersport_id', $id)->where('status', 'unpaid')->update(['satuan' => $request->harga]);
         $data->save();
         return redirect()->route('admin.water-sport.index')->with('success', 'Berhasil update data');
     }

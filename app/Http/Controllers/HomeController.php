@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\Models\WaterSport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -27,5 +29,12 @@ class HomeController extends Controller
     {
         $data = WaterSport::findOrFail($id);
         return view('detail', compact('data'));
+    }
+
+    public function transaksi()
+    {
+        $user = Auth::user();
+        $invoices = Invoice::where('user_id', $user->id)->get();
+        return view('transaksi', compact('invoices'));
     }
 }
