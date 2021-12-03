@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Invoice;
 use App\Models\User;
 use App\Models\WaterSport;
 use Illuminate\Http\Request;
@@ -98,6 +99,28 @@ class BookingController extends Controller
         $user->alamat = $request->alamat;
         $user->no_tlp = $request->tlp;
         $user->save();
+        return response()->json('Success');
+    }
+
+    public function invoice(Request $request)
+    {
+        $tgl = date('d/m/Y');
+        $user = User::find(Auth::user()->id);
+        $inv = uniqid('INV/' . $tgl . '/');
+        $bukti = $request->bukti;
+        Invoice::create([
+            'user_id' => $user->id,
+            'nomor' => $inv,
+            'bukti_bayar' => $bukti->hashName(),
+            'total' => $request->totalInv,
+            'status' => 'payment-unverifed'
+        ]);
+        $bukti->storeAs('public/bukti-bayar', $bukti->hashName());
+        //update cart
+        Cart::where('user_id', $user->id)->where('status', 'unpaid')->update(['status' => 'payment-unverifed']);
+        //update sesion
+        $booking = Cart::where('user_id', $user->id)->where('status', 'unpaid')->get()->count();
+        $request->session()->put('booking', $booking);
         return response()->json('Success');
     }
 }

@@ -32,6 +32,7 @@ Route::post('booking/change/amount', [BookingController::class, 'change'])->name
 Route::post('booking/delete', [BookingController::class, 'delete'])->name('delete.booking');
 Route::post('booking/delete/all', [BookingController::class, 'deleteAll'])->name('delete.all.booking');
 Route::post('booking/post/identitas', [BookingController::class, 'identitas'])->name('identitas');
+Route::post('booking/invoice', [BookingController::class, 'invoice'])->name('make.invoice');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::name('admin.')->group(function () {

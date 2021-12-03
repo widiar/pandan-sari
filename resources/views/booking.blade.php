@@ -364,7 +364,7 @@ Home Pandan Sari Dive & Water Sport
             <div class="modal-header">
                 <h3 class="modal-title" id="pembayaranModal">Pembayaran</h3>
             </div>
-            <form action="#" method="POST" id="form-pembayaran">
+            <form action="{{ route('make.invoice') }}" method="POST" id="form-pembayaran" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <h3 class="text-center">Silahkan Transfer ke Bank BCA</h3>
@@ -397,6 +397,7 @@ Home Pandan Sari Dive & Water Sport
                     <img src="https://via.placeholder.com/1080x1080.png?text=BuktiBayar" alt=""
                         class="img-thumbnail img-detail">
                     <small>Klik Gambar Untuk Lihat Detail</small>
+                    <input type="hidden" name="totalInv" id="totalInv" value="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -465,6 +466,7 @@ Home Pandan Sari Dive & Water Sport
         })
         $('.total-amount_rp').text(toRupiah(total))
         $('.bayar').text(toRupiah(total))
+        $('#totalInv').val(total)
     }
 
     totalAmount()
@@ -592,6 +594,28 @@ Home Pandan Sari Dive & Water Sport
             success: (res) => {
                 $('#bayarModal').modal('hide')
                 $('#transaksiModal').modal('show')
+            }
+        })
+    })
+    
+    $('#form-pembayaran').submit(function(e){
+        e.preventDefault()
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: (res) => {
+                console.log(res)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pembayaran Diproses',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((res) => {
+                    window.location.href = ''
+                })
             }
         })
     })
