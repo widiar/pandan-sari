@@ -166,6 +166,12 @@
             "positionClass": "toast-top-right",
             "preventDuplicates": false,
         }
+        function toRupiah(value) {
+			let reverse = value.toString().split('').reverse().join('')
+			let val = reverse.match(/\d{1,3}/g)
+			val = val.join('.').split('').reverse().join('')
+			return val
+		}
     </script>
 
     @yield('script')

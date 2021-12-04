@@ -15,4 +15,9 @@ class Invoice extends Model
     {
         return $this->hasMany(Cart::class, 'invoice_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

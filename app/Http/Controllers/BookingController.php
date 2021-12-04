@@ -137,8 +137,10 @@ class BookingController extends Controller
         $invoice->load('cart');
         $cart = $invoice->cart;
         $cart->load('watersport');
+        $user = $invoice->user;
         return response()->json([
             'data' => $cart,
+            'user' => $user,
             'total' => $invoice->total
         ]);
     }

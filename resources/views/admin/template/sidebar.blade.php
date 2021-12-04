@@ -14,7 +14,8 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="#" class="nav-link{{request()->is('admin/banner') ? ' active' : '' }}">
+                    <a href="{{ route('admin.booking') }}"
+                        class="nav-link{{request()->is('admin/booking') ? ' active' : '' }}">
                         <i class="nav-icon fas fa-image"></i>
                         <p>
                             Data Booking

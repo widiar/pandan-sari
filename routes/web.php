@@ -42,6 +42,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
             });
             Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
             Route::resource('water-sport', WaterSportController::class);
+
+            Route::get('booking', [AdminController::class, 'booking'])->name('booking');
+            Route::post('booking/verif', [AdminController::class, 'verifBooking'])->name('booking.verif');
+            Route::post('booking/reject', [AdminController::class, 'rejectBooking'])->name('booking.reject');
         });
     });
 });
