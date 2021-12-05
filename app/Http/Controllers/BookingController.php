@@ -116,7 +116,7 @@ class BookingController extends Controller
         $bukti = $request->bukti;
         $invoice = Invoice::create([
             'user_id' => $user->id,
-            'nomor' => $inv,
+            'nomor' => strtoupper($inv),
             'bukti_bayar' => $bukti->hashName(),
             'total' => $request->totalInv,
             'status' => 'payment-unverifed'
@@ -143,5 +143,20 @@ class BookingController extends Controller
             'user' => $user,
             'total' => $invoice->total
         ]);
+    }
+
+    public function uploadUlang(Request $request)
+    {
+        try {
+            $inv = Invoice::where('nomor', $request->inv)->firstOrFail();
+            $bukti = $request->bukti;
+            $inv->bukti_bayar = $bukti->hashName();
+            $inv->status = 'payment-unverifed';
+            $bukti->storeAs('public/bukti-bayar', $bukti->hashName());
+            $inv->save();
+            return response()->json('Success');
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
     }
 }

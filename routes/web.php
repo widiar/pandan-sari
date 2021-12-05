@@ -27,12 +27,6 @@ Route::get('admin/login', function () {
 Route::post('/admin/login', [AdminController::class, 'login']);
 
 Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
-Route::post('booking/add', [BookingController::class, 'add'])->name('add.booking');
-Route::post('booking/change/amount', [BookingController::class, 'change'])->name('change.booking');
-Route::post('booking/delete', [BookingController::class, 'delete'])->name('delete.booking');
-Route::post('booking/delete/all', [BookingController::class, 'deleteAll'])->name('delete.all.booking');
-Route::post('booking/post/identitas', [BookingController::class, 'identitas'])->name('identitas');
-Route::post('booking/invoice', [BookingController::class, 'invoice'])->name('make.invoice');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::name('admin.')->group(function () {
@@ -52,7 +46,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('transaksi', [HomeController::class, 'transaksi'])->name('transaksi');
+    Route::post('transaksi/upload', [BookingController::class, 'uploadUlang'])->name('upload.ulang');
     Route::get('invoice/detail', [BookingController::class, 'detailInvoice'])->name('detail.invoice');
+
+    Route::post('booking/add', [BookingController::class, 'add'])->name('add.booking');
+    Route::post('booking/change/amount', [BookingController::class, 'change'])->name('change.booking');
+    Route::post('booking/delete', [BookingController::class, 'delete'])->name('delete.booking');
+    Route::post('booking/delete/all', [BookingController::class, 'deleteAll'])->name('delete.all.booking');
+    Route::post('booking/post/identitas', [BookingController::class, 'identitas'])->name('identitas');
+    Route::post('booking/invoice', [BookingController::class, 'invoice'])->name('make.invoice');
 });
 
 Route::get('invoices', [HomeController::class, 'invoiceMail'])->name('mail.invoice');

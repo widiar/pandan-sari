@@ -68,16 +68,36 @@ Home Pandan Sari Dive & Water Sport
         height: 500px !important
     }
 
-    .badge-warning {
+    .warning {
         background-color: rgb(255, 153, 0);
     }
 
-    .badge-danger {
+    .danger {
         background-color: red
     }
 
-    .badge-success {
+    .success {
         background-color: green
+    }
+
+    .bank-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .bank-img img {
+        object-fit: contain;
+        object-position: center;
+        width: 200px;
+    }
+
+    .img-detail {
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        cursor: pointer;
+        height: 200px;
     }
 
     @media screen and (max-width: 768px) {
@@ -92,6 +112,14 @@ Home Pandan Sari Dive & Water Sport
 
         .total {
             margin-left: 0;
+        }
+
+        .bank-img {
+            margin: 0 20px;
+        }
+
+        .bank-img img {
+            width: 100px;
         }
     }
 </style>
@@ -127,20 +155,29 @@ Home Pandan Sari Dive & Water Sport
         <div class="title">
             <h3>{{ strtoupper($data->nomor) }}</h3>
             @if ($data->status == 'payment-unverifed')
-            <h4 class="badge badge-warning">Processing</h4>
+            <h4 class="badge warning">Processing</h4>
             @elseif ($data->status == 'payment-rejected')
-            <h4 class="badge badge-danger">Rejected</h4>
+            <h4 class="badge danger">Rejected</h4>
             @else
-            <h4 class="badge badge-success">Successfully</h4>
+            <h4 class="badge success">Successfully</h4>
             @endif
         </div>
         <div class="aksi">
             <button class="btn btn-sm btn-primary btn-detail" data-id="{{ $data->id }}">
                 <i class="fas fa-eye"></i>
             </button>
-            <button class="btn btn-sm btn-primary">
-                <i class="fas fa-eye"></i>
+            @if ($data->status == 'payment-verifed')
+            <a href="{{ route('mail.invoice', ['nomor'=>$data->nomor]) }}" target="_blank">
+                <button class="btn btn-sm btn-success">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                </button>
+            </a>
+            @elseif ($data->status == 'payment-rejected')
+            <button class="btn btn-sm btn-warning upload-bukti" data-total="{{ $data->total }}"
+                data-nomor="{{ $data->nomor }}" data-id="{{ $data->id }}">
+                <i class="fas fa-upload"></i>
             </button>
+            @endif
         </div>
     </div>
 </div>
@@ -155,6 +192,74 @@ Home Pandan Sari Dive & Water Sport
             </div>
             <div class="modal-body isiandetail">
 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="transaksiModal" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="pembayaranModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="pembayaranModal">Pembayaran</h3>
+            </div>
+            <form action="{{ route('upload.ulang') }}" method="POST" id="form-pembayaran" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <h3 class="text-center">Silahkan Transfer ke Bank BCA</h3>
+                    <h3 class="text-center">Total Rp <span class="bayar"></span></h3>
+                    <div class="bank-container">
+                        <div class="bank-img">
+                            <img src="https://www.freepnglogos.com/uploads/logo-bca-png/bank-central-asia-logo-bank-central-asia-bca-format-cdr-png-gudril-1.png"
+                                alt="">
+                        </div>
+                        <div class="bank-text">
+                            <h3>a.n. Edward Larry Page</h3>
+                            <h4>5138494651354</h4>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bukti">Upload Bukti Pembayaran</label>
+                        <div class="custom-file">
+                            <input type="file" required name="bukti"
+                                class="file custom-file-input @error('bukti') is-invalid @enderror" id="bukti"
+                                value="{{ old('bukti') }}" accept="image/x-png, image/jpeg">
+                            <label class="custom-file-label" for="bukti">
+                                <span class="d-inline-block text-truncate w-75">Browse File</span>
+                            </label>
+                            @error("bukti")
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <small class="form-text text-muted">upload format file .png, .jpg max 5mb.</small>
+                    </div>
+                    <img src="https://via.placeholder.com/1080x1080.png?text=BuktiBayar" alt=""
+                        class="img-thumbnail img-detail">
+                    <small>Klik Gambar Untuk Lihat Detail</small>
+                    <input type="hidden" name="totalInv" id="totalInv" value="">
+                    <input type="hidden" name="inv" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="pembayaranModal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="pembayaranModal">Bukti Bayar</h3>
+            </div>
+            <div class="modal-body">
+                <img src="" alt="" class="img-thumbnail img-modal-detail" style="width: 100%">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -211,6 +316,51 @@ Home Pandan Sari Dive & Water Sport
                 $('#detailModal').modal('show')
             }
         })
+    })
+
+    $('.upload-bukti').click(function(){
+        const total = $(this).data('total')
+        const nomor = $(this).data('nomor')
+        $('.bayar').text(toRupiah(total))
+        $('input[name="inv"]').val(nomor)
+        console.log(nomor)
+        $('#transaksiModal').modal('show')
+    })
+
+    $('#form-pembayaran').submit(function(e){
+        e.preventDefault()
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: (res) => {
+                console.log(res)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pembayaran Diproses',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((res) => {
+                    window.location.href = ''
+                })
+            },
+            error: (res) => {
+                Swal.fire("Oops", "Something Wrong!", "error");
+                console.log(res.responseJSON)
+            }
+        })
+    })
+
+    $('#bukti').change(function(e){
+        let url = URL.createObjectURL(e.target.files[0])
+        $(".img-detail").attr("src", url)
+    })
+
+    $('.img-detail').click(function(){
+        $('.img-modal-detail').attr('src', $(this).attr('src'))
+        $('#imageModal').modal('show')
     })
 </script>
 @endsection

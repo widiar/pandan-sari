@@ -58,9 +58,6 @@
 @endsection
 
 @section('main-content')
-<a href="{{ route('admin.water-sport.create') }}" class="m-3">
-    <button class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data</button>
-</a>
 <div class="card shadow mx-3">
     <div class="card-body table-responsive">
         @if(session('success'))
