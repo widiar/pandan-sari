@@ -210,7 +210,7 @@
                   },
                   beforeSend: () => {
                     Swal.fire({
-                        text: 'Procesiing',
+                        text: 'Procesing',
                         timer: 2000,
                         allowOutsideClick: false,
                         allowEscapeKey: false,

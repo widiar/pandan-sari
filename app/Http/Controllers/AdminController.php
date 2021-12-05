@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\InvoiceMail;
+use App\Mail\PaymentRejectMail;
 use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -43,8 +44,8 @@ class AdminController extends Controller
             $inv = Invoice::find($request->id);
             $inv->load('user');
             $inv->status = 'payment-verifed';
-            $inv->save();
             Mail::to($inv->user->email)->send(new InvoiceMail($inv));
+            $inv->save();
             return response()->json('Success');
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 500);
@@ -56,6 +57,8 @@ class AdminController extends Controller
         try {
             $inv = Invoice::find($request->id);
             $inv->status = 'payment-rejected';
+            $inv->load('user');
+            Mail::to($inv->user->email)->send(new PaymentRejectMail($inv->nomor));
             $inv->save();
             return response()->json('Success');
         } catch (\Throwable $th) {
@@ -65,12 +68,12 @@ class AdminController extends Controller
 
     public function dev()
     {
-        // $markdown = new Markdown(view(), config('mail.markdown'));
-        // $url = '#';
-        // return $markdown->render('email.coba', compact('url'));
-        $inv = Invoice::find(1);
-        $inv->load('user', 'cart');
-        dd($inv);
+        $markdown = new Markdown(view(), config('mail.markdown'));
+        $url = '#';
+        return $markdown->render('email.payment-reject', compact('url'));
+        // $inv = Invoice::find(1);
+        // $inv->load('user', 'cart');
+        // dd($inv);
     }
 
     public function dev2()
