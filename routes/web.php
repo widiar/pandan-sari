@@ -54,3 +54,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('transaksi', [HomeController::class, 'transaksi'])->name('transaksi');
     Route::get('invoice/detail', [BookingController::class, 'detailInvoice'])->name('detail.invoice');
 });
+
+
+Route::get('dev', [AdminController::class, 'dev']);

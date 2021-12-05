@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -56,5 +57,12 @@ class AdminController extends Controller
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 500);
         }
+    }
+
+    public function dev()
+    {
+        $markdown = new Markdown(view(), config('mail.markdown'));
+        $url = '#';
+        return $markdown->render('email.coba', compact('url'));
     }
 }
