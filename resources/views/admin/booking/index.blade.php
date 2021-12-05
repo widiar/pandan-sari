@@ -208,7 +208,20 @@
                   data: {
                       id: id
                   },
+                  beforeSend: () => {
+                    Swal.fire({
+                        text: 'Procesiing',
+                        timer: 2000,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            Swal.stopTimer()
+                        }
+                    })
+                  },
                   success: function(res){
+                    Swal.close()
                     Swal.fire({
                         title: 'Success!',
                         text: `The data has been ${text}.`,

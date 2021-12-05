@@ -55,5 +55,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('invoice/detail', [BookingController::class, 'detailInvoice'])->name('detail.invoice');
 });
 
+Route::get('invoices', [HomeController::class, 'invoiceMail'])->name('mail.invoice');
 
 Route::get('dev', [AdminController::class, 'dev']);

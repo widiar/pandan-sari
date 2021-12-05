@@ -37,4 +37,11 @@ class HomeController extends Controller
         $invoices = Invoice::where('user_id', $user->id)->get();
         return view('transaksi', compact('invoices'));
     }
+
+    public function invoiceMail(Request $request)
+    {
+        $inv = Invoice::where('nomor', urldecode($request->nomor))->where('status', 'payment-verifed')->firstOrFail();
+        $inv->load('user', 'cart');
+        return view('email.invoice-detail', compact('inv'));
+    }
 }
