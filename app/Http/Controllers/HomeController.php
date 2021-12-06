@@ -44,4 +44,9 @@ class HomeController extends Controller
         $inv->load('user', 'cart');
         return view('email.invoice-detail', compact('inv'));
     }
+
+    public function gallery()
+    {
+        return view('gallery');
+    }
 }

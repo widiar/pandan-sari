@@ -275,15 +275,6 @@
 		$('#date-start').datepicker();
 	};
 
-	var parallax = function() {
-		$(window).stellar({
-			horizontalScrolling: false,
-			hideDistantElements: false, 
-			responsive: true
-
-		});
-	};
-
 
 	
 	$(function(){
@@ -298,7 +289,6 @@
 		loaderPage();
 		counterWayPoint();
 		dateForm();
-		parallax();
 	});
 
 

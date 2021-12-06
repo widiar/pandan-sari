@@ -18,7 +18,8 @@
 									(session('booking') > 0 ? session('booking') : '') }}</span>
 							</a>
 						</li>
-						<li class="{{ request()->is('gallery') ? 'active' : ''}}"><a href="gallery">Gallery</a></li>
+						<li class="{{ request()->is('gallery') ? 'active' : ''}}"><a
+								href="{{ route('gallery') }}">Gallery</a></li>
 						@auth
 						<li class="has-dropdown">
 							<a href="#">Account</a>

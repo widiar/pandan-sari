@@ -161,9 +161,12 @@
 	</div>
 
 	<!-- jQuery -->
-	<script src="{{asset('template')}}/js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
-	<script src="{{asset('template')}}/js/jquery.easing.1.3.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
+		integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<!-- Bootstrap -->
 	<script src="{{asset('template')}}/js/bootstrap.min.js"></script>
 	<!-- Waypoints -->
@@ -172,9 +175,6 @@
 	<script src="{{asset('template')}}/js/owl.carousel.min.js"></script>
 	<!-- countTo -->
 	<script src="{{asset('template')}}/js/jquery.countTo.js"></script>
-
-	<!-- Stellar Parallax -->
-	<script src="{{asset('template')}}/js/jquery.stellar.min.js"></script>
 
 	<!-- Magnific Popup -->
 	<script src="{{asset('template')}}/js/jquery.magnific-popup.min.js"></script>

@@ -12,7 +12,7 @@ use App\Http\Controllers\WaterSportController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('booking', [BookingController::class, 'booking'])->name('booking');
-Route::get('/gallery', [GalleryController::class, 'gallery']);
+Route::get('gallery', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('/aboutus', [AboutusController::class, 'aboutus']);
 Route::get('/contact', [ContactController::class, 'contact']);
 
@@ -44,6 +44,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
             Route::get('transaksi', [AdminController::class, 'transaksi'])->name('transaksi');
             Route::get('transaksi/print', [AdminController::class, 'transaksiPrint'])->name('transaksi.print');
+
+            Route::resource('gallery', GalleryController::class);
         });
     });
 });
