@@ -41,14 +41,13 @@
                     <td>{{ $dt->nama }}</td>
                     <td class="text-center">
                         <div class="row justify-content-center" style="min-width: 100px">
-                            <a href="#">
+                            <a href="{{ Storage::url('gallery/') . $dt->file }}" class="btn-detail">
                                 <button class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></button>
                             </a>
-                            <a href="{{ route('admin.water-sport.edit', $dt->id) }}" class="mx-3">
+                            <a href="{{ route('admin.gallery.edit', $dt->id) }}" class="mx-3">
                                 <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
                             </a>
-                            <form action="{{ route('admin.water-sport.destroy', $dt->id) }}" method="POST"
-                                class="deleted">
+                            <form action="{{ route('admin.gallery.destroy', $dt->id) }}" method="POST" class="deleted">
                                 @method("DELETE")
                                 @csrf
                                 <button class="btn btn-sm btn-danger" type="submit"><i
@@ -57,7 +56,11 @@
                         </div>
                     </td>
                     <td class="text-center">
+                        @if($dt->status == 'publish')
                         <h2 class="badge badge-success">Publish</h2>
+                        @elseif($dt->status == 'draft')
+                        <h2 class="badge badge-warning">Draft</h2>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
@@ -67,9 +70,34 @@
     </div>
 </div>
 
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Detail Gambar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="" alt="" class="img-thumbnail img-detail" style="width: 100%">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('script')
 <script>
+    $('.btn-detail').click(function(e){
+        e.preventDefault()
+        const url = $(this).attr('href')
+        $('.img-detail').attr('src', url)
+        $('#imageModal').modal('show')
+    })
 </script>
 @endsection

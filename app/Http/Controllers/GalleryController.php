@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
@@ -36,7 +37,19 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'foto' => 'required|image',
+            'status' => 'required|in:draft,publish'
+        ]);
+        $foto = $request->foto;
+        Gallery::create([
+            'nama' => $request->nama,
+            'file' => $foto->hashName(),
+            'status' => $request->status,
+        ]);
+        $foto->storeAs('public/gallery', $foto->hashName());
+        return redirect()->route('admin.gallery.index')->with('success', 'Berhasil menambah data');
     }
 
     /**
@@ -58,7 +71,8 @@ class GalleryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Gallery::find($id);
+        return view('admin.gallery.edit', compact('data'));
     }
 
     /**
@@ -70,7 +84,17 @@ class GalleryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = Gallery::find($id);
+        $data->nama = $request->nama;
+        $data->status = $request->status;
+        $foto = $request->file('foto');
+        if ($foto) {
+            Storage::disk('public')->delete('gallery/' . $data->image);
+            $foto->storeAs('public/gallery', $foto->hashName());
+            $data->file = $foto->hashName();
+        }
+        $data->save();
+        return redirect()->route('admin.gallery.index')->with('success', 'Berhasil update data');
     }
 
     /**
@@ -81,6 +105,9 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Gallery::find($id);
+        Storage::disk('public')->delete('gallery/' . $data->file);
+        $data->delete();
+        return response()->json("Sukses");
     }
 }
