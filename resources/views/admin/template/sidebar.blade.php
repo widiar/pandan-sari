@@ -16,7 +16,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.booking') }}"
                         class="nav-link{{request()->is('admin/booking') ? ' active' : '' }}">
-                        <i class="nav-icon fas fa-image"></i>
+                        <i class="nav-icon fas fa-swatchbook"></i>
                         <p>
                             Data Booking
                         </p>
@@ -25,7 +25,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.transaksi') }}"
                         class="nav-link{{request()->is('admin/transaksi') ? ' active' : '' }}">
-                        <i class="nav-icon fas fa-image"></i>
+                        <i class="nav-icon fas fa-file-invoice-dollar"></i>
                         <p>
                             Laporan Transaksi
                         </p>
@@ -34,7 +34,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.water-sport.index') }}"
                         class="nav-link{{request()->is('admin/water-sport*') ? ' active' : '' }}">
-                        <i class="nav-icon fas fa-image"></i>
+                        <i class="nav-icon fas fa-swimmer"></i>
                         <p>
                             Informasi WaterSport
                         </p>

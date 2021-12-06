@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gallery;
 use App\Models\Invoice;
 use App\Models\WaterSport;
 use Illuminate\Http\Request;
@@ -47,6 +48,7 @@ class HomeController extends Controller
 
     public function gallery()
     {
-        return view('gallery');
+        $data = Gallery::where('status', 'publish')->get();
+        return view('gallery', compact('data'));
     }
 }

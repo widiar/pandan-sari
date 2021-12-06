@@ -133,19 +133,21 @@ Home Pandan Sari Dive & Water Sport
 
             <div class="row gallery-container">
 
+                @foreach ($data as $dt)
+
                 <div class="col-lg-4 col-md-6 gallery-item filter-coba">
                     <div class="gallery-wrap">
-                        <img src="{{ asset('img/portfolio/portfolio-1.jpg') }}" class="img-fluid" alt="">
+                        <img src="{{ Storage::url('gallery/') . $dt->file }}" class="img-fluid" alt="">
                         <div class="gallery-info">
-                            <h4>App 1</h4>
-                            <p>App</p>
+                            <h4>{{ $dt->nama }}</h4>
                             <div class="gallery-links">
-                                <a href="{{ asset('img/portfolio/portfolio-1.jpg') }}" data-gall="portfolioGallery"
-                                    class="venobox" title="App 1"><i class="fas fa-eye"></i></a>
+                                <a href="{{ Storage::url('gallery/') . $dt->file }}" data-gall="portfolioGallery"
+                                    class="venobox" title="{{ $dt->nama }}"><i class="fas fa-eye"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
 
             </div>
 
