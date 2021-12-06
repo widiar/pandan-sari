@@ -28,6 +28,7 @@ Route::post('/admin/login', [AdminController::class, 'login']);
 
 Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
 
+//admin
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::name('admin.')->group(function () {
         Route::prefix('/admin')->group(function () {
@@ -40,10 +41,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::get('booking', [AdminController::class, 'booking'])->name('booking');
             Route::post('booking/verif', [AdminController::class, 'verifBooking'])->name('booking.verif');
             Route::post('booking/reject', [AdminController::class, 'rejectBooking'])->name('booking.reject');
+
+            Route::get('transaksi', [AdminController::class, 'transaksi'])->name('transaksi');
+            Route::get('transaksi/print', [AdminController::class, 'transaksiPrint'])->name('transaksi.print');
         });
     });
 });
 
+//auth
 Route::middleware(['auth'])->group(function () {
     Route::get('transaksi', [HomeController::class, 'transaksi'])->name('transaksi');
     Route::post('transaksi/upload', [BookingController::class, 'uploadUlang'])->name('upload.ulang');

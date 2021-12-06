@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 
 class AdminController extends Controller
 {
@@ -66,6 +67,22 @@ class AdminController extends Controller
         }
     }
 
+    public function transaksi()
+    {
+        $data = Invoice::where('status', 'payment-verifed')->get();
+        $data->load('user');
+        return view('admin.transaksi.index', compact('data'));
+    }
+
+    public function transaksiPrint()
+    {
+        $invoice = Invoice::where('status', 'payment-verifed')->get();
+        $invoice->load('user', 'cart');
+        $pdf = PDF::loadView('admin.transaksi.pdf', compact('invoice'));
+        $pdf->setOption('header-html', view('admin.headerPdf'));
+        return $pdf->download('Laporan Transaksi ' . uniqid() . '.pdf');
+    }
+
     public function dev()
     {
         $markdown = new Markdown(view(), config('mail.markdown'));
@@ -74,9 +91,5 @@ class AdminController extends Controller
         // $inv = Invoice::find(1);
         // $inv->load('user', 'cart');
         // dd($inv);
-    }
-
-    public function dev2()
-    {
     }
 }

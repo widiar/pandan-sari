@@ -23,7 +23,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link{{request()->is('admin/banner') ? ' active' : '' }}">
+                    <a href="{{ route('admin.transaksi') }}"
+                        class="nav-link{{request()->is('admin/transaksi') ? ' active' : '' }}">
                         <i class="nav-icon fas fa-image"></i>
                         <p>
                             Laporan Transaksi
