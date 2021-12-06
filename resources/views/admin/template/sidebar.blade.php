@@ -41,7 +41,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link{{request()->is('admin/banner') ? ' active' : '' }}">
+                    <a href="{{ route('admin.gallery.index') }}"
+                        class="nav-link{{request()->is('admin/gallery') ? ' active' : '' }}">
                         <i class="nav-icon fas fa-image"></i>
                         <p>
                             Gallery
