@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMail;
 use App\Models\Gallery;
 use App\Models\Invoice;
 use App\Models\WaterSport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -19,11 +21,6 @@ class HomeController extends Controller
     public function home()
     {
         return view('home');
-    }
-
-    public function contact()
-    {
-        return view('public.contact');
     }
 
     public function detail($id)
@@ -50,5 +47,17 @@ class HomeController extends Controller
     {
         $data = Gallery::where('status', 'publish')->get();
         return view('gallery', compact('data'));
+    }
+
+    public function contact()
+    {
+        return view('contact');
+    }
+
+    public function sendContact(Request $request)
+    {
+        // dd($request->all());
+
+        Mail::to(env('MAIL_CONTACT'))->send(new ContactMail($request->all()));
     }
 }

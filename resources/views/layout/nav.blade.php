@@ -31,7 +31,8 @@
 						</li>
 						@endauth
 						<li class="{{ request()->is('aboutus') ? 'active' : ''}}"><a href="aboutus">About Us</a></li>
-						<li class="{{ request()->is('contact') ? 'active' : ''}}"><a href="contact">Contact</a></li>
+						<li class="{{ request()->is('contact') ? 'active' : ''}}"><a
+								href="{{ route('contact') }}">Contact</a></li>
 					</ul>
 				</div>
 			</div>

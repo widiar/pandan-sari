@@ -28,33 +28,33 @@
 	<link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 
 	<!-- Animate.css -->
-	<link rel="stylesheet" href="{{asset('template')}}/css/animate.css">
+	<link rel="stylesheet" href="{{asset('template/css/animate.css')}}">
 	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="{{asset('template')}}/css/icomoon.css">
+	<link rel="stylesheet" href="{{asset('template/css/icomoon.css')}}">
 	<!-- Themify Icons-->
-	<link rel="stylesheet" href="{{asset('template')}}/css/themify-icons.css">
+	<link rel="stylesheet" href="{{asset('template/css/themify-icons.css')}}">
 	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="{{asset('template')}}/css/bootstrap.css">
+	<link rel="stylesheet" href="{{asset('template/css/bootstrap.css')}}">
 
 	<!-- Magnific Popup -->
-	<link rel="stylesheet" href="{{asset('template')}}/css/magnific-popup.css">
+	<link rel="stylesheet" href="{{asset('template/css/magnific-popup.css')}}">
 
 	<!-- Magnific Popup -->
-	<link rel="stylesheet" href="{{asset('template')}}/css/bootstrap-datepicker.min.css">
+	<link rel="stylesheet" href="{{asset('template/css/bootstrap-datepicker.min.css')}}">
 
 	<!-- Owl Carousel  -->
-	<link rel="stylesheet" href="{{asset('template')}}/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="{{asset('template')}}/css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="{{asset('template/css/owl.carousel.min.css')}}">
+	<link rel="stylesheet" href="{{asset('template/css/owl.theme.default.min.css')}}">
 
 	<script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
 	<link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.css') }}">
 
 	<!-- Theme style  -->
-	<link rel="stylesheet" href="{{asset('template')}}/css/style.css">
+	<link rel="stylesheet" href="{{asset('template/css/style.css')}}">
 
 	<!-- Modernizr JS -->
-	<script src="{{asset('template')}}/js/modernizr-2.6.2.min.js"></script>
+	<script src="{{asset('template/js/modernizr-2.6.2.min.js')}}"></script>
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
@@ -168,25 +168,27 @@
 		integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<!-- Bootstrap -->
-	<script src="{{asset('template')}}/js/bootstrap.min.js"></script>
+	<script src="{{asset('template/js/bootstrap.min.js')}}"></script>
 	<!-- Waypoints -->
-	<script src="{{asset('template')}}/js/jquery.waypoints.min.js"></script>
+	<script src="{{asset('template/js/jquery.waypoints.min.js')}}"></script>
 	<!-- Carousel -->
-	<script src="{{asset('template')}}/js/owl.carousel.min.js"></script>
+	<script src="{{asset('template/js/owl.carousel.min.js')}}"></script>
 	<!-- countTo -->
-	<script src="{{asset('template')}}/js/jquery.countTo.js"></script>
+	<script src="{{asset('template/js/jquery.countTo.js')}}"></script>
 
 	<!-- Magnific Popup -->
-	<script src="{{asset('template')}}/js/jquery.magnific-popup.min.js"></script>
-	<script src="{{asset('template')}}/js/magnific-popup-options.js"></script>
+	<script src="{{asset('template/js/jquery.magnific-popup.min.js')}}"></script>
+	<script src="{{asset('template/js/magnific-popup-options.js')}}"></script>
 
 	<!-- Datepicker -->
-	<script src="{{asset('template')}}/js/bootstrap-datepicker.min.js"></script>
+	<script src="{{asset('template/js/bootstrap-datepicker.min.js')}}"></script>
 
 	<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
 	<!-- Main -->
-	<script src="{{asset('template')}}/js/main.js"></script>
+	<script src="{{asset('template/js/main.js')}}"></script>
 
 	<script>
 		toastr.options = {

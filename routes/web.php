@@ -5,7 +5,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\AboutusController;
-use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WaterSportController;
@@ -14,7 +13,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('booking', [BookingController::class, 'booking'])->name('booking');
 Route::get('gallery', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('/aboutus', [AboutusController::class, 'aboutus']);
-Route::get('/contact', [ContactController::class, 'contact']);
+Route::get('contact', [HomeController::class, 'contact'])->name('contact');
+Route::post('contact', [HomeController::class, 'sendContact']);
 
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::get('confirm-email', [AuthController::class, 'confirm'])->name('confirm');
