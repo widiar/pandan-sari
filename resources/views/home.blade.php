@@ -44,6 +44,12 @@ Home Pandan Sari Dive & Water Sport
 		height: 250px;
 		width: 100%;
 	}
+
+	@media screen and (max-width: 768px) {
+		.img-info {
+			display: none;
+		}
+	}
 </style>
 @endsection
 
