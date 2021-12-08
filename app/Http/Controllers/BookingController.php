@@ -39,6 +39,7 @@ class BookingController extends Controller
                 'user_id' => $user->id,
                 'watersport_id' => $request->watersport,
                 'tanggal' => $request->tanggal,
+                'status' => 'unpaid'
             ]);
             if ($cart->jumlah) {
                 $cart->jumlah = $cart->jumlah + $request->orang;
