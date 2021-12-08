@@ -104,7 +104,7 @@ Home Pandan Sari Dive & Water Sport
 			}
 			e.preventDefault()
 			$.ajax({
-				url: `{{ url('check.email') }}`,
+				url: `{{ route('check.email') }}`,
 				method: 'POST',
 				data: {
 					email: $('#regEmail').val()
