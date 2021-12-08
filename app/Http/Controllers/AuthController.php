@@ -44,14 +44,12 @@ class AuthController extends Controller
         $user = TokenUser::where('email', $email)->firstOrFail();
         $expire = new DateTime($user->created_at);
         $expire->modify('+1 hour');
-        if (new DateTime() < $expire) {
-            if (strcmp($token, $user->token) == 0) {
-                $usr = User::where('email', $email)->first();
-                $usr->is_active = 1;
-                $usr->save();
-                $user->delete();
-                return redirect()->route('home')->with(['success' => 'Konfirmasi berhasil silahkan Login']);
-            }
+        if (strcmp($token, $user->token) == 0) {
+            $usr = User::where('email', $email)->first();
+            $usr->is_active = 1;
+            $usr->save();
+            $user->delete();
+            return redirect()->route('home')->with(['success' => 'Konfirmasi berhasil silahkan Login']);
         }
         return redirect()->route('home')->with(['error' => 'Link Expired']);
     }

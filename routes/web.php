@@ -12,7 +12,7 @@ use App\Http\Controllers\WaterSportController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('booking', [BookingController::class, 'booking'])->name('booking');
 Route::get('gallery', [HomeController::class, 'gallery'])->name('gallery');
-Route::get('/aboutus', [AboutusController::class, 'aboutus']);
+Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('contact', [HomeController::class, 'sendContact']);
 

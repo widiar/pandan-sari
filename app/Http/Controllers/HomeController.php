@@ -89,4 +89,9 @@ class HomeController extends Controller
             return response()->json($th->getMessage(), 500);
         }
     }
+
+    public function about()
+    {
+        return view('about');
+    }
 }

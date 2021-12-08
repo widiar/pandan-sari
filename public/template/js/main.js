@@ -270,6 +270,10 @@
 		}
 	};
 
+	const oke = () => {
+		$('.copy').html(`&copy; 2021 <a target="_blank" href="https://ariwidiarsana.firebaseapp.com/">ITB Stikom Bali</a> Jimbaran`)
+	}
+
 
 	var dateForm = function() {
 		$('#date-start').datepicker();
@@ -285,6 +289,7 @@
 		contentWayPoint();
 		dropdown();
 		owlCarousel();
+		oke()
 		goToTop();
 		loaderPage();
 		counterWayPoint();

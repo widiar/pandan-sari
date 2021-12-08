@@ -64,7 +64,11 @@ Home Pandan Sari Dive & Water Sport
 	</div>
 	<div class="col-lg-6 col-md-6 col-centered">
 		<h2>Pandan Sari Watersport</h2>
-		<p>Pandan Sari Watersport adalah.....</p>
+		<p>Pandan Sari Dive & Water Sport
+			merupakan salah satu objek wisata di
+			Bali yang menawarkan berbagai
+			aktifitas olahraga air atau water sports
+			activity</p>
 	</div>
 </div>
 

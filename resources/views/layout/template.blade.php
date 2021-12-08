@@ -68,6 +68,43 @@
 
 	@yield('css')
 
+	<style>
+		.row-new {
+			display: flex;
+		}
+
+		.gtco-widget .row-new {
+			justify-content: space-between;
+		}
+
+
+		.gtco-row {
+			margin-left: 80px;
+		}
+
+		.last-row {
+			margin-left: 100px
+		}
+
+		@media screen and (max-width: 768px) {
+			.row-c {
+				flex-direction: column;
+			}
+
+			.gtco-widget .row-new {
+				justify-content: start;
+			}
+
+			.isi-row {
+				margin-left: 15px;
+			}
+
+			.row-new .link:last-child {
+				margin-left: 25px;
+			}
+		}
+	</style>
+
 </head>
 
 <body>
@@ -89,38 +126,11 @@
 		<!-- footer -->
 		<footer id="gtco-footer" role="contentinfo">
 			<div class="gtco-container">
-				<div class="row row-p b-md" style="margin-bottom: -10px">
+				<div class="row-new row-c">
 
-					<div class="col-md-4">
+					<div class="col-md-4 isi-row">
 						<div class="gtco-widget">
 							<h3>About Us</h3>
-						</div>
-					</div>
-
-					<div class="col-md-2 col-md-push-1">
-						<div class="gtco-widget">
-							<h3>Water Sport</h3>
-						</div>
-					</div>
-
-					<div class="col-md-2 col-md-push-1">
-						<div class="gtco-widget">
-							<h3>Activity</h3>
-						</div>
-					</div>
-
-					<div class="col-md-3 col-md-push-1">
-						<div class="gtco-widget">
-							<h3>Get In Touch</h3>
-						</div>
-					</div>
-
-				</div>
-				<div class="row row-p b-md">
-
-					<div class="col-md-4">
-						<div class="gtco-widget">
-							{{-- <h3>About Us</h3> --}}
 							<p>“PANDAN SARI Dive and Watersport” teregistrasi dibawah PT PANDAN SARI WISATA TIRTA.
 								<br><br>Siap untuk mendampingi pelanggan dalam merencanakan dan mengorganisir Water
 								Sport, All Events dalam koordinasi pada kebutuhan pelanggan dan biaya.
@@ -128,40 +138,45 @@
 						</div>
 					</div>
 
-					<div class="col-md-2 col-md-push-1">
+					<div class="isi-row gtco-row">
 						<div class="gtco-widget">
-							{{-- <h3>Water Sport</h3> --}}
-							<ul class="gtco-footer-links">
-								<li><a href="#">Parasailing</a></li>
-								<li><a href="#">Jetski</a></li>
-								<li><a href="#">Fly Fish</a></li>
-								<li><a href="#">Donut Slider</a></li>
-								<li><a href="#">Fly Board</a></li>
-							</ul>
+							<h3>Water Sport Activity</h3>
+							<div class="row-new">
+								<div class="link">
+									<ul class="gtco-footer-links">
+										<li><a href="#">Parasailing</a></li>
+										<li><a href="#">Jetski</a></li>
+										<li><a href="#">Fly Fish</a></li>
+										<li><a href="#">Donut Slider</a></li>
+										<li><a href="#">Fly Board</a></li>
+									</ul>
+								</div>
+								<div class="link">
+									<ul class="gtco-footer-links">
+										<li><a href="#">Water Ski</a></li>
+										<li><a href="#">Wake Board</a></li>
+										<li><a href="#">Snorkeling</a></li>
+										<li><a href="#">Scuba Diving</a></li>
+										<li><a href="#">Sea Walker</a></li>
+									</ul>
+								</div>
+							</div>
 						</div>
 					</div>
 
-					<div class="col-md-2 col-md-push-1">
+					<div class="isi-row last-row gtco-row">
 						<div class="gtco-widget">
-							{{-- <h3></h3> --}}
-							<ul class="gtco-footer-links">
-								<li><a href="#">Water Ski</a></li>
-								<li><a href="#">Wake Board</a></li>
-								<li><a href="#">Snorkeling</a></li>
-								<li><a href="#">Scuba Diving</a></li>
-								<li><a href="#">Sea Walker</a></li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col-md-3 col-md-push-1">
-						<div class="gtco-widget">
-							{{-- <h3>Get In Touch</h3> --}}
+							<h3>Get In Touch</h3>
 							<ul class="gtco-quick-contact">
-								<li><a href="#"><i class="icon-phone"></i> +62-361 4728126 </a></li>
-								<li><a href="#"><i class="icon-phone"></i> +62-819 16404488 </a></li>
-								<li><a href="#"><i class="icon-mail2"></i> agustinobsc@yahoo.com</a></li>
-								<li><a href="#"><i class="icon-chat"></i> Live Chat</a></li>
+								<li><a href="https://wa.me/6281916404488"><i class="icon-phone"></i> +62 8191 6404 488
+									</a></li>
+								<li><a href="https://wa.me/6282144339944"><i class="icon-phone"></i> +62 8214 4339 944
+									</a></li>
+								<li><a href="mailto:pandansari.marine@gmail.com"><i class="icon-mail2"></i>
+										pandansari.marine@gmail.com</a></li>
+								<li><a href="https://g.page/pandan-sari-watersports"><i class="icon-location2"></i> Jl.
+										Pratama No. 104 Tanjung Benoa,
+										Bali</a></li>
 							</ul>
 						</div>
 					</div>
@@ -171,15 +186,13 @@
 				<div class="row copyright">
 					<div class="col-md-12">
 						<p class="pull-left">
-							<small class="block">&copy; 2021 ITB Stikom Bali Jimbaran.</small>
+							<small class="block copy">&copy; 2021 ITB Stikom Bali Jimbaran.</small>
 							<small class="block">Designed by Reva Deandary & Milla Kusuma Dewi
 						</p>
 						<p class="pull-right">
 						<ul class="gtco-social-icons pull-right">
-							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-instagram"></i></a></li>
 							<li><a href="#"><i class="icon-facebook"></i></a></li>
-							<li><a href="#"><i class="icon-linkedin"></i></a></li>
-							<li><a href="#"><i class="icon-dribbble"></i></a></li>
 						</ul>
 						</p>
 					</div>
