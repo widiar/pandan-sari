@@ -22,7 +22,8 @@
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
                                                         <label for="email">Email</label>
-                                                        <input type="email" required class="form-control" name="email">
+                                                        <input type="email" id="regEmail" required class="form-control"
+                                                            name="email">
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">

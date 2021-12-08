@@ -28,6 +28,8 @@ Route::post('/admin/login', [AdminController::class, 'login']);
 
 Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
 
+Route::post('check/email', [AuthController::class, 'emailCheck'])->name('check.email');
+
 //admin
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::name('admin.')->group(function () {

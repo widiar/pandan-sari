@@ -29,6 +29,13 @@ class AuthController extends Controller
         return redirect()->route('home')->with(['success' => 'Berhasil daftar, silahkan cek email untuk login']);
     }
 
+    public function emailCheck(Request $request)
+    {
+        $cek = User::where('email', $request->email)->first();
+        if ($cek) return response()->json('fail', 500);
+        else return response()->json('success');
+    }
+
     public function confirm(Request $request)
     {
         $email = $request->email;

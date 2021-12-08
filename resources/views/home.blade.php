@@ -102,6 +102,23 @@ Home Pandan Sari Dive & Water Sport
 				toastr.info('Password tidak sama!', 'Password')
 				return false;
 			}
+			e.preventDefault()
+			$.ajax({
+				url: `{{ url('check.email') }}`,
+				method: 'POST',
+				data: {
+					email: $('#regEmail').val()
+				},
+				success: (res) => {
+					$('#form-signup').submit()
+				},
+				error: (res) => {
+					console.log(res)
+					e.preventDefault()
+					toastr.info('Email Sudah terdaftar!', 'Email')
+					return false;
+				}
+			})
 		})
 	})
 </script>
