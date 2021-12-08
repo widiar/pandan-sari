@@ -89,11 +89,38 @@
 		<!-- footer -->
 		<footer id="gtco-footer" role="contentinfo">
 			<div class="gtco-container">
-				<div class="row row-p	b-md">
+				<div class="row row-p b-md" style="margin-bottom: -10px">
 
 					<div class="col-md-4">
 						<div class="gtco-widget">
 							<h3>About Us</h3>
+						</div>
+					</div>
+
+					<div class="col-md-2 col-md-push-1">
+						<div class="gtco-widget">
+							<h3>Water Sport</h3>
+						</div>
+					</div>
+
+					<div class="col-md-2 col-md-push-1">
+						<div class="gtco-widget">
+							<h3>Activity</h3>
+						</div>
+					</div>
+
+					<div class="col-md-3 col-md-push-1">
+						<div class="gtco-widget">
+							<h3>Get In Touch</h3>
+						</div>
+					</div>
+
+				</div>
+				<div class="row row-p b-md">
+
+					<div class="col-md-4">
+						<div class="gtco-widget">
+							{{-- <h3>About Us</h3> --}}
 							<p>“PANDAN SARI Dive and Watersport” teregistrasi dibawah PT PANDAN SARI WISATA TIRTA.
 								<br><br>Siap untuk mendampingi pelanggan dalam merencanakan dan mengorganisir Water
 								Sport, All Events dalam koordinasi pada kebutuhan pelanggan dan biaya.
@@ -103,7 +130,7 @@
 
 					<div class="col-md-2 col-md-push-1">
 						<div class="gtco-widget">
-							<h3>Water Sport</h3>
+							{{-- <h3>Water Sport</h3> --}}
 							<ul class="gtco-footer-links">
 								<li><a href="#">Parasailing</a></li>
 								<li><a href="#">Jetski</a></li>
@@ -116,7 +143,7 @@
 
 					<div class="col-md-2 col-md-push-1">
 						<div class="gtco-widget">
-							<h3>Activity</h3>
+							{{-- <h3></h3> --}}
 							<ul class="gtco-footer-links">
 								<li><a href="#">Water Ski</a></li>
 								<li><a href="#">Wake Board</a></li>
@@ -129,7 +156,7 @@
 
 					<div class="col-md-3 col-md-push-1">
 						<div class="gtco-widget">
-							<h3>Get In Touch</h3>
+							{{-- <h3>Get In Touch</h3> --}}
 							<ul class="gtco-quick-contact">
 								<li><a href="#"><i class="icon-phone"></i> +62-361 4728126 </a></li>
 								<li><a href="#"><i class="icon-phone"></i> +62-819 16404488 </a></li>
