@@ -97,28 +97,33 @@ Home Pandan Sari Dive & Water Sport
 		$('#form-signup').submit(function(e){
 			const pw1 = $('#pw1').val()
 			const pw2 = $('#pw2').val()
+			const form = $('#form-signup')
 			if(pw1 !== pw2) {
 				e.preventDefault()
 				toastr.info('Password tidak sama!', 'Password')
 				return false;
 			}
-			e.preventDefault()
-			$.ajax({
-				url: `{{ route('check.email') }}`,
-				method: 'POST',
-				data: {
-					email: $('#regEmail').val()
-				},
-				success: (res) => {
-					$('#form-signup').submit()
-				},
-				error: (res) => {
-					console.log(res)
-					e.preventDefault()
-					toastr.info('Email Sudah terdaftar!', 'Email')
-					return false;
-				}
-			})
+			if($(this).attr('validated') == 'false'){
+				e.preventDefault()
+				$.ajax({
+					url: `{{ route('check.email') }}`,
+					method: 'POST',
+					data: {
+						email: $('#regEmail').val()
+					},
+					success: (res) => {
+						$('#form-signup').attr('validated', 'true')
+						$('#form-signup').submit()
+						return true
+					},
+					error: (res) => {
+						console.log(res)
+						e.preventDefault()
+						toastr.info('Email Sudah terdaftar!', 'Email')
+						return false;
+					}
+				})
+			}
 		})
 	})
 </script>

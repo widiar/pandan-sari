@@ -17,7 +17,8 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-content-inner" data-content="signup">
-                                            <form action="{{ route('register') }}" method="POST" id="form-signup">
+                                            <form action="{{ route('register') }}" method="POST" id="form-signup"
+                                                validated='false'>
                                                 @csrf
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
