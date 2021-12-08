@@ -6,10 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Pandan Sari Dive & Water Sport</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
-	<meta name="keywords"
-		content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
-	<meta name="author" content="FreeHTML5.co" />
+	<meta name="description" content="Pandan Sari" />
+	<meta name="keywords" content="pandan sari, dive, bali" />
+	<meta name="author" content="Ari Widiarsana" />
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!-- Facebook and Twitter integration -->
@@ -22,6 +21,10 @@
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
+
+	<!-- Favicons -->
+	<link href="{{ asset('gambar/logo.png') }}" rel="icon">
+	<link href="{{ asset('gambar/logo.png') }}" rel="apple-touch-icon">
 
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
 
@@ -50,8 +53,11 @@
 
 	<link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.css') }}">
 
+
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="{{asset('template/css/style.css')}}">
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 
 	<!-- Modernizr JS -->
 	<script src="{{asset('template/js/modernizr-2.6.2.min.js')}}"></script>
@@ -186,6 +192,8 @@
 	<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
+	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
 	<!-- Main -->
 	<script src="{{asset('template/js/main.js')}}"></script>

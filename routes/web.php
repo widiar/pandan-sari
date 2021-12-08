@@ -62,6 +62,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('booking/delete/all', [BookingController::class, 'deleteAll'])->name('delete.all.booking');
     Route::post('booking/post/identitas', [BookingController::class, 'identitas'])->name('identitas');
     Route::post('booking/invoice', [BookingController::class, 'invoice'])->name('make.invoice');
+
+    Route::get('akun', [HomeController::class, 'akun'])->name('akun');
+    Route::post('akun', [HomeController::class, 'updateAkun']);
 });
 
 Route::get('invoices', [HomeController::class, 'invoiceMail'])->name('mail.invoice');

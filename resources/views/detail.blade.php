@@ -96,7 +96,7 @@ Home Pandan Sari Dive & Water Sport
     @csrf
     <div class="form-group">
         <label for="">Tanggal</label>
-        <input name="tanggal" required type="date" class="form-control">
+        <input name="tanggal" id="tanggal" required type="text" class="form-control">
     </div>
     <div class="form-group">
         <label for="">Jumlah Orang</label>
@@ -124,6 +124,10 @@ Home Pandan Sari Dive & Water Sport
         $('#total').text(total)
         $('input[name="total"]').val(total)
     })
+
+    $("#tanggal").datepicker({
+        minDate: 0,
+    });
 
     $('form').submit(function(e){
         e.preventDefault()
