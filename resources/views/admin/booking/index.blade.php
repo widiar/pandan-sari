@@ -94,10 +94,10 @@
                     <td class="text-center">
                         <a href="{{ Storage::url('bukti-bayar/' . $dt->bukti_bayar) }}" class="bukti"
                             data-status="{{ $dt->status }}" data-id="{{ $dt->id }}">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-sm btn-primary"><i class="fas fa-receipt"></i></button>
                         </a>
                         <a href="{{ route('detail.invoice') }}" class="detail" data-id="{{ $dt->id }}">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i></button>
                         </a>
                     </td>
                     <td class="text-center">

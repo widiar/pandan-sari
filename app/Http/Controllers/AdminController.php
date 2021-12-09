@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\InvoiceMail;
+use App\Mail\LaporanBookingMail;
 use App\Mail\PaymentRejectMail;
 use App\Mail\ReplyContactMail;
 use App\Models\GetInTouch;
@@ -46,8 +47,9 @@ class AdminController extends Controller
         try {
             $inv = Invoice::find($request->id);
             $inv->load('user');
-            $inv->status = 'payment-verifed';
             Mail::to($inv->user->email)->send(new InvoiceMail($inv));
+            Mail::to(env('MAIL_CONTACT'))->send(new LaporanBookingMail($inv));
+            $inv->status = 'payment-verifed';
             $inv->save();
             return response()->json('Success');
         } catch (\Throwable $th) {
@@ -115,7 +117,9 @@ class AdminController extends Controller
     {
         $markdown = new Markdown(view(), config('mail.markdown'));
         $url = '#';
-        return $markdown->render('email.replyContactUs', compact('url'));
+        $invoice = Invoice::find(1);
+        $invoice->load('user');
+        return $markdown->render('email.laporanBooking', compact('invoice'));
         // $inv = Invoice::find(1);
         // $inv->load('user', 'cart');
         // dd($inv);
