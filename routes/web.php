@@ -48,6 +48,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::get('transaksi/print', [AdminController::class, 'transaksiPrint'])->name('transaksi.print');
 
             Route::resource('gallery', GalleryController::class);
+
+            Route::get('getintouch', [AdminController::class, 'contactus'])->name('get.intouch');
+            Route::post('reply/pesan', [AdminController::class, 'replyPesan'])->name('reply.pesan');
         });
     });
 });

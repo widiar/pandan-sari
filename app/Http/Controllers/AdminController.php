@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mail\InvoiceMail;
 use App\Mail\PaymentRejectMail;
+use App\Mail\ReplyContactMail;
+use App\Models\GetInTouch;
 use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -83,11 +85,37 @@ class AdminController extends Controller
         return $pdf->download('Laporan Transaksi ' . uniqid() . '.pdf');
     }
 
+    public function contactus()
+    {
+        $data = GetInTouch::all();
+        return view('admin.getintouch.index', compact('data'));
+    }
+
+    public function replyPesan(Request $request)
+    {
+        try {
+            $contact = GetInTouch::find($request->idContact);
+            $pesan = $request->pesan;
+            $data = [
+                'nama' => $contact->nama,
+                'pesan' => $contact->pesan,
+                'pesanBalasan' => $pesan,
+                'subject' => $contact->subject
+            ];
+            Mail::to($contact->email)->send(new ReplyContactMail($data));
+            $contact->is_reply = 1;
+            $contact->save();
+            return response()->json('Success');
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
     public function dev()
     {
         $markdown = new Markdown(view(), config('mail.markdown'));
         $url = '#';
-        return $markdown->render('email.payment-reject', compact('url'));
+        return $markdown->render('email.replyContactUs', compact('url'));
         // $inv = Invoice::find(1);
         // $inv->load('user', 'cart');
         // dd($inv);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactMail;
 use App\Models\Gallery;
+use App\Models\GetInTouch;
 use App\Models\Invoice;
 use App\Models\User;
 use App\Models\WaterSport;
@@ -59,7 +60,14 @@ class HomeController extends Controller
     public function sendContact(Request $request)
     {
         try {
-            Mail::to(env('MAIL_CONTACT'))->send(new ContactMail($request->all()));
+            // Mail::to(env('MAIL_CONTACT'))->send(new ContactMail($request->all()));
+            GetInTouch::create([
+                'nama' => $request->nama,
+                'email' => $request->email,
+                'subject' => $request->subject,
+                'pesan' => $request->pesan
+            ]);
+            return response()->json('Success');
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 500);
         }

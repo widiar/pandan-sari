@@ -49,6 +49,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.get.intouch') }}"
+                        class="nav-link{{request()->is('admin/getintouch') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-address-card"></i>
+                        <p>
+                            Get In Touch
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
