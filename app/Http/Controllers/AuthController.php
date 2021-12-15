@@ -65,6 +65,8 @@ class AuthController extends Controller
             if ($user && $user->is_active == 0 && $user->role != 1) {
                 Auth::logout();
                 return redirect()->route('home')->with('error', 'Akun anda belum di verifikasi.')->withInput();
+            } else if ($user && $user->role == 1) {
+                return redirect()->route('admin.dashboard');
             } else {
                 $booking = Cart::where('user_id', $user->id)->where('status', 'unpaid')->get()->count();
                 $request->session()->put('booking', $booking);

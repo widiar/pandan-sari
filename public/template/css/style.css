@@ -357,10 +357,10 @@ figure {
     color: #09c6ab;
 }
 #gtco-header .form-wrap .tab-menu li.gtco-first a {
-    border-top-left-radius: 7px;
+    /* border-top-left-radius: 7px; */
 }
 #gtco-header .form-wrap .tab-menu li.gtco-second a {
-    border-top-right-radius: 7px;
+    /* border-top-right-radius: 7px; */
 }
 #gtco-header .form-wrap .tab-content {
     z-index: 10;

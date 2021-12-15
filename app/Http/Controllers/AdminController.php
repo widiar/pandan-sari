@@ -8,12 +8,14 @@ use App\Mail\PaymentRejectMail;
 use App\Mail\ReplyContactMail;
 use App\Models\GetInTouch;
 use App\Models\Invoice;
+use App\Models\LaporanTransaksi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -73,18 +75,55 @@ class AdminController extends Controller
 
     public function transaksi()
     {
-        $data = Invoice::where('status', 'payment-verifed')->get();
-        $data->load('user');
+        $data = LaporanTransaksi::all();
         return view('admin.transaksi.index', compact('data'));
     }
 
-    public function transaksiPrint()
+    // public function transaksiPrint()
+    // {
+    //     $invoice = Invoice::where('status', 'payment-verifed')->get();
+    //     $invoice->load('user', 'cart');
+    //     $pdf = PDF::loadView('admin.transaksi.pdf', compact('invoice'));
+    //     $pdf->setOption('header-html', view('admin.headerPdf'));
+    //     return $pdf->download('Laporan Transaksi ' . uniqid() . '.pdf');
+    // }
+
+    public function transaksiPost(Request $request)
     {
-        $invoice = Invoice::where('status', 'payment-verifed')->get();
-        $invoice->load('user', 'cart');
-        $pdf = PDF::loadView('admin.transaksi.pdf', compact('invoice'));
-        $pdf->setOption('header-html', view('admin.headerPdf'));
-        return $pdf->download('Laporan Transaksi ' . uniqid() . '.pdf');
+        try {
+            $tmp = explode("-", $request->tanggal);
+            $bulan = $tmp[0];
+            $tahun = $tmp[1];
+            $cek = LaporanTransaksi::where([
+                ['bulan', $bulan],
+                ['tahun', $tahun]
+            ])->first();
+            if ($cek) return response()->json('Ada');
+
+            $filename = uniqid() . ".pdf";
+            $invoice = Invoice::where('status', 'payment-verifed')->whereMonth('updated_at', $bulan)->whereYear('updated_at', $tahun)->get();
+            $invoice->load('user', 'cart');
+            $pdf = PDF::loadView('admin.transaksi.pdf', compact('invoice'));
+            $pdf->setOption('header-html', view('admin.headerPdf'))->save('storage/laporan-transaksi/' . $filename);
+
+            LaporanTransaksi::create([
+                'file' => $filename,
+                'bulan' => $bulan,
+                'tahun' => $tahun
+            ]);
+
+            return response()->json('Success');
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function transaksiDelete($id)
+    {
+        $data = LaporanTransaksi::find($id);
+        Storage::disk('public')->delete('laporan-transaksi/' . $data->file);
+        $data->delete();
+        return response()->json('Sukses');
     }
 
     public function contactus()

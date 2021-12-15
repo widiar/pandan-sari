@@ -34,9 +34,9 @@ Route::post('check/email', [AuthController::class, 'emailCheck'])->name('check.e
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::name('admin.')->group(function () {
         Route::prefix('/admin')->group(function () {
-            Route::get('/', function () {
-                return redirect()->route('admin.login');
-            });
+            // Route::get('/', function () {
+            //     return redirect()->route('admin.login');
+            // });
             Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
             Route::resource('water-sport', WaterSportController::class);
 
@@ -45,7 +45,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::post('booking/reject', [AdminController::class, 'rejectBooking'])->name('booking.reject');
 
             Route::get('transaksi', [AdminController::class, 'transaksi'])->name('transaksi');
-            Route::get('transaksi/print', [AdminController::class, 'transaksiPrint'])->name('transaksi.print');
+            Route::post('transaksi/post', [AdminController::class, 'transaksiPost'])->name('transaksi.post');
+            Route::delete('transaksi/{id}/delete', [AdminController::class, 'transaksiDelete'])->name('transaksi.delete');
 
             Route::resource('gallery', GalleryController::class);
 
