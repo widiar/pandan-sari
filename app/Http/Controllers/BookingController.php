@@ -38,7 +38,7 @@ class BookingController extends Controller
             $cart = Cart::firstOrCreate([
                 'user_id' => $user->id,
                 'watersport_id' => $request->watersport,
-                'tanggal' => $request->tanggal,
+                'tanggal' => NULL,
                 'status' => 'unpaid'
             ]);
             if ($cart->jumlah) {
@@ -49,9 +49,9 @@ class BookingController extends Controller
                 $cart->jumlah = $request->orang;
                 $cart->total = $request->total;
                 $cart->satuan = $request->satuan;
-                $booking = $request->session()->get('booking');
-                $booking += 1;
-                $request->session()->put('booking', $booking);
+                // $booking = $request->session()->get('booking');
+                // $booking += 1;
+                // $request->session()->put('booking', $booking);
             }
             $cart->save();
             return response()->json('Success');
@@ -82,7 +82,7 @@ class BookingController extends Controller
         $cart->delete();
         $user = Auth::user();
         $booking = Cart::where('user_id', $user->id)->where('status', 'unpaid')->get()->count();
-        $request->session()->put('booking', $booking);
+        // $request->session()->put('booking', $booking);
         return response()->json([
             'booking' => $booking
         ]);

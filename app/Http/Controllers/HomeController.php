@@ -18,7 +18,21 @@ class HomeController extends Controller
     public function index()
     {
         $watersport = WaterSport::all();
-        return view('home', compact('watersport'));
+        if (Auth::check()) {
+            $user = User::find(Auth::user()->id);
+            $user->load(['cart' => function ($q) {
+                $q->where('status', 'unpaid')->orderBy('tanggal');
+            }]);
+            $carts = $user->cart;
+            foreach ($carts as $cart) {
+                $cart->total = $cart->jumlah * $cart->satuan;
+                $cart->save();
+            }
+            $carts->load('watersport');
+        } else {
+            $carts = [];
+        }
+        return view('home', compact('watersport', 'carts'));
     }
 
     public function home()

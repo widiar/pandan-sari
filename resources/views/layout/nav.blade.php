@@ -13,11 +13,11 @@
 				<div class="col-xs-8 text-right menu-1">
 					<ul>
 						<li class="{{ request()->is('/') ? 'active' : ''}}"><a href="/">Home</a></li>
-						<li class="{{ request()->is('booking') ? 'active' : ''}}">
+						{{-- <li class="{{ request()->is('booking') ? 'active' : ''}}">
 							<a href="{{ route('booking') }}">Booking <span class="badge badge-warning count-booking">{{
 									(session('booking') > 0 ? session('booking') : '') }}</span>
 							</a>
-						</li>
+						</li> --}}
 						<li class="{{ request()->is('gallery') ? 'active' : ''}}"><a
 								href="{{ route('gallery') }}">Gallery</a></li>
 						@auth

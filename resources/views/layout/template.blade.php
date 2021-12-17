@@ -191,8 +191,10 @@
 						</p>
 						<p class="pull-right">
 						<ul class="gtco-social-icons pull-right">
-							<li><a href="#"><i class="icon-instagram"></i></a></li>
-							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="https://instagram.com/pandansari.marine" target="_blank"><i
+										class="icon-instagram"></i></a></li>
+							<li><a href="https://www.facebook.com/pandansari.marine/" target="_blank"><i
+										class="icon-facebook"></i></a></li>
 						</ul>
 						</p>
 					</div>
