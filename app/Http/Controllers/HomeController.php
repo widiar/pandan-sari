@@ -31,8 +31,9 @@ class HomeController extends Controller
             $carts->load('watersport');
         } else {
             $carts = [];
+            $user = NULL;
         }
-        return view('home', compact('watersport', 'carts'));
+        return view('home', compact('watersport', 'carts', 'user'));
     }
 
     public function home()

@@ -41,20 +41,24 @@ class BookingController extends Controller
                 'tanggal' => NULL,
                 'status' => 'unpaid'
             ]);
-            if ($cart->jumlah) {
-                $cart->jumlah = $cart->jumlah + $request->orang;
-                $cart->total = $cart->total + $request->total;
-                $cart->satuan = $request->satuan;
-            } else {
-                $cart->jumlah = $request->orang;
-                $cart->total = $request->total;
-                $cart->satuan = $request->satuan;
-                // $booking = $request->session()->get('booking');
-                // $booking += 1;
-                // $request->session()->put('booking', $booking);
-            }
+            $cart->jumlah = $request->orang;
+            $cart->total = $request->orang * $request->satuan;
+            $cart->satuan = $request->satuan;
+            // if ($cart->jumlah) {
+            //     $cart->jumlah = $cart->jumlah + $request->orang;
+            //     $cart->total = $cart->total + $request->total;
+            //     $cart->satuan = $request->satuan;
+            // } else {
+            //     // $booking = $request->session()->get('booking');
+            //     // $booking += 1;
+            //     // $request->session()->put('booking', $booking);
+            // }
             $cart->save();
-            return response()->json('Success');
+            // return response()->json('Success');
+            return response()->json([
+                'cart' => $cart,
+                'total' => $request->orang * $request->satuan
+            ]);
         } catch (\Throwable $th) {
             return response()->json($th, 400);
         }
@@ -106,6 +110,12 @@ class BookingController extends Controller
         $user->alamat = $request->alamat;
         $user->no_tlp = $request->tlp;
         $user->save();
+
+        Cart::where([
+            ['status', 'unpaid'],
+            ['user_id', $user->id],
+            ['tanggal', NULL]
+        ])->update(['tanggal' => $request->tanggal]);
         return response()->json('Success');
     }
 

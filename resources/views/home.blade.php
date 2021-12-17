@@ -72,9 +72,41 @@ Home Pandan Sari Dive & Water Sport
 		margin-bottom: 40px;
 	}
 
+	.bank-container {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+	}
+
+	.bank-img img {
+		object-fit: contain;
+		object-position: center;
+		width: 200px;
+	}
+
+	.img-detail {
+		object-fit: cover;
+		object-position: center;
+		width: 100%;
+		cursor: pointer;
+		height: 200px;
+	}
+
 	@media screen and (max-width: 768px) {
 		.img-info {
 			display: none;
+		}
+
+		.total-amount {
+			font-size: 26px;
+		}
+
+		.bank-img {
+			margin: 0 20px;
+		}
+
+		.bank-img img {
+			width: 100px;
 		}
 	}
 </style>
@@ -112,10 +144,12 @@ Home Pandan Sari Dive & Water Sport
 				<div class="fh5co-text">
 					<h2>{{ $data->nama }}</h2>
 					{{-- <p style="margin-bottom: 0">{{ $data->deskripsi }}</p> --}}
-					<p style="margin-bottom: 0">Harga Rp <b>{{ number_format($data->harga, '0', '.', '.') }}/pax</b></p>
+					<p style="margin-bottom: 0">Harga Rp <b class="harga_satuan">{{ number_format($data->harga,
+							'0', '.', '.') }}</b>/pax</p>
 					<p style="margin-bottom: 0">Minimal {{ $data->minimal }} pax</p>
 				</div>
 			</a>
+			<div class="watersport" style="display: none">{{ $data->id }}</div>
 			@auth
 			@php
 			$total = 0;
@@ -173,8 +207,114 @@ Home Pandan Sari Dive & Water Sport
 	<button class="btn btn-danger js-gotop">Login</button>
 	@endguest
 	@auth
-	<button class="btn btn-success" data-toggle="modal" data-target="#bayarModal">Pembayaran</button>
+	<button class="btn btn-success btn-bayar" data-toggle="modal" data-target="#bayarModal">Pembayaran</button>
 	@endauth
+</div>
+<div class="modal fade" id="bayarModal" data-backdrop="static" tabindex="-1" role="dialog"
+	aria-labelledby="pembayaranModal" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="pembayaranModal">Detail</h3>
+			</div>
+			<form action="{{ route('identitas') }}" method="POST" id="form-identitas">
+				@csrf
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="">Tanggal</label>
+						<input name="tanggal" id="tanggal" required type="text" class="form-control"
+							value="{{ @$carts[0]->tanggal }}">
+					</div>
+					<div class="form-group">
+						<label for="nama">Nama Lengkap</label>
+						<input type="text" required class="form-control" name="nama" placeholder="Masukkan Nama Lengkap"
+							value="{{ @$user->nama }}">
+					</div>
+					<div class="form-group">
+						<label for="alamat">Alamat</label>
+						<input type="text" required class="form-control" name="alamat" placeholder="Masukkan Alamat"
+							value="{{ @$user->alamat }}">
+					</div>
+					<div class="form-group">
+						<label for="tlp">No. Telepon</label>
+						<input type="text" required class="form-control" name="tlp" placeholder="Masukkan No. Telepon"
+							value="{{ @$user->no_tlp }}">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Selanjutnya</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="transaksiModal" data-backdrop="static" tabindex="-1" role="dialog"
+	aria-labelledby="pembayaranModal" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="pembayaranModal">Pembayaran</h3>
+			</div>
+			<form action="{{ route('make.invoice') }}" method="POST" id="form-pembayaran" enctype="multipart/form-data">
+				@csrf
+				<div class="modal-body">
+					<h3 class="text-center">Silahkan Transfer ke Bank BCA</h3>
+					<h3 class="text-center">Total Rp <span class="bayar"></span></h3>
+					<div class="bank-container">
+						<div class="bank-img">
+							<img src="https://www.freepnglogos.com/uploads/logo-bca-png/bank-central-asia-logo-bank-central-asia-bca-format-cdr-png-gudril-1.png"
+								alt="">
+						</div>
+						<div class="bank-text">
+							<h3>a.n. Edward Larry Page</h3>
+							<h4>5138494651354</h4>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="bukti">Upload Bukti Pembayaran</label>
+						<div class="custom-file">
+							<input type="file" required name="bukti"
+								class="file custom-file-input @error('bukti') is-invalid @enderror" id="bukti"
+								value="{{ old('bukti') }}" accept="image/x-png, image/jpeg">
+							<label class="custom-file-label" for="bukti">
+								<span class="d-inline-block text-truncate w-75">Browse File</span>
+							</label>
+							@error("bukti")
+							<div class="invalid-feedback">{{ $message }}</div>
+							@enderror
+						</div>
+						<small class="form-text text-muted">upload format file .png, .jpg max 5mb.</small>
+					</div>
+					<img src="https://via.placeholder.com/1080x1080.png?text=BuktiBayar" alt=""
+						class="img-thumbnail img-detail">
+					<small>Klik Gambar Untuk Lihat Detail</small>
+					<input type="hidden" name="totalInv" id="totalInv" value="">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Proses Pembayaran</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="pembayaranModal"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="pembayaranModal">Bukti Bayar</h3>
+			</div>
+			<div class="modal-body">
+				<img src="" alt="" class="img-thumbnail img-modal-detail" style="width: 100%">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection
 
@@ -207,6 +347,8 @@ Home Pandan Sari Dive & Water Sport
         })
         $('.total-amount_rp').text(toRupiah(total))
         $('.bayar').text(toRupiah(total))
+		if (total == 0) $('.btn-bayar').attr('disabled', 'disabled')
+		else $('.btn-bayar').removeAttr('disabled')
         $('#totalInv').val(total)
     }
 
@@ -269,6 +411,45 @@ Home Pandan Sari Dive & Water Sport
                     success: (res) => {
                         // console.log(res)
 						parent.find('.counter-cart').text(0)
+						parent.closest('.fh5co-card-item').find('.amount_rp').text(0)
+                        totalAmount()
+                    }
+                })
+            }
+        })
+	}
+
+	const addCart = (pr) => {
+		const parent = pr.parent()
+		const minim = parent.data('minimal')
+        // const idCart = parent.data('id')
+		const satuan = parent.closest('.fh5co-card-item').find('.harga_satuan').text().split('.').join('').trim()
+		const idWa = parent.closest('.fh5co-card-item').find('.watersport').text()
+        Swal.fire({
+            title: 'Loading',
+            timer: 20000,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+                Swal.showLoading()
+                Swal.stopTimer()
+                $.ajax({
+                    url: urlAdd,
+                    method: 'POST',
+                    data: {
+                        watersport: idWa,
+						orang: minim,
+						satuan: satuan
+                    },
+                    complete: () => {
+                        Swal.close()
+                    },
+                    success: (res) => {
+                        // console.log(res)
+						parent.find('.counter-cart').text(minim)
+						parent.data('id', res.cart.id)
+						let total = toRupiah(res.total)
+                        parent.closest('.fh5co-card-item').find('.amount_rp').text(total)
                         totalAmount()
                     }
                 })
@@ -309,6 +490,10 @@ Home Pandan Sari Dive & Water Sport
 			}
 		})
 
+		$("#tanggal").datepicker({
+			minDate: 0,
+		});
+
 		totalAmount()
 		checkMinus()
 		$('.btn-plus').click(function(e){
@@ -318,7 +503,7 @@ Home Pandan Sari Dive & Water Sport
 			} else {
 				const cnt = parseInt($(this).parent().find('.counter-cart').text().trim())
 				if (cnt <= 0){
-
+					addCart($(this))
 				}
 				else{ 
 					counter($(this), 1)
@@ -342,6 +527,57 @@ Home Pandan Sari Dive & Water Sport
 				}
 			}
 		})
+
+		$('#form-identitas').submit(function(e){
+			e.preventDefault()
+			$.ajax({
+				url: $(this).attr('action'),
+				method: $(this).attr('method'),
+				data: $(this).serialize(),
+				success: (res) => {
+					$('#bayarModal').modal('hide')
+					$('#transaksiModal').modal('show')
+				}
+			})
+		})
+		$('#form-pembayaran').submit(function(e){
+			e.preventDefault()
+			$.ajax({
+				url: $(this).attr('action'),
+				method: $(this).attr('method'),
+				data: new FormData(this),
+				processData: false,
+				contentType: false,
+				success: (res) => {
+					console.log(res)
+					Swal.fire({
+						icon: 'success',
+						title: 'Pembayaran Diproses',
+						showConfirmButton: false,
+						timer: 1500
+					}).then((res) => {
+						window.location.href = ''
+					})
+				}
+			})
+		})
+
+		$('#bukti').change(function(e){
+			let url = URL.createObjectURL(e.target.files[0])
+			$(".img-detail").attr("src", url)
+		})
+
+		$('.img-detail').click(function(){
+			$('.img-modal-detail').attr('src', $(this).attr('src'))
+			$('#imageModal').modal('show')
+		})
+
+		$('body').on('hidden.bs.modal', function () {
+			if($('.modal.in').length > 0)
+			{
+				$('body').addClass('modal-open');
+			}
+		});
 	})
 </script>
 @endsection
