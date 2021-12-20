@@ -75,6 +75,14 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="limit">Maksimal Tiket per Hari</label>
+                <input type="number" required name="limit" class="form-control  @error('limit') is-invalid @enderror"
+                    value="{{ old('limit', $data->limit) }}">
+                @error('limit')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="foto">Foto</label>
                 <div class="img-frame">
                     <img src="{{ Storage::url('water-sport/') . $data->image }}" alt="" class="img-crop">

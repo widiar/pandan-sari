@@ -110,13 +110,33 @@ class BookingController extends Controller
         $user->alamat = $request->alamat;
         $user->no_tlp = $request->tlp;
         $user->save();
-
-        Cart::where([
+        Cart::with('watersport')->where([
             ['status', 'unpaid'],
             ['user_id', $user->id],
             ['tanggal', NULL]
         ])->update(['tanggal' => $request->tanggal]);
-        return response()->json('Success');
+        $carts = Cart::with('watersport')->where([
+            ['status', 'unpaid'],
+            ['user_id', $user->id],
+            ['tanggal', $request->tanggal]
+        ])->get();
+        $err = [];
+        foreach ($carts as $cart) {
+            $sisa = $cart->watersport->getSisa(date('d', strtotime($request->tanggal)));
+            if (($sisa - $cart->jumlah) <= 0) {
+                array_push($err, $cart->watersport->nama);
+            }
+        }
+        if (count($err) > 0) {
+            return response()->json([
+                'wisata' => $err,
+                'tanggal' => $request->tanggal,
+                'status' => 'tanggal'
+            ]);
+        }
+        return response()->json([
+            'status' => 'Success'
+        ]);
     }
 
     public function invoice(Request $request)

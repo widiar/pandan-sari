@@ -40,7 +40,7 @@ class AdminController extends Controller
 
     public function booking()
     {
-        $data = Invoice::all();
+        $data = Invoice::orderBy('created_at', 'desc')->get();
         return view('admin.booking.index', compact('data'));
     }
 
@@ -48,11 +48,12 @@ class AdminController extends Controller
     {
         try {
             $inv = Invoice::find($request->id);
-            $inv->load('user');
+            $inv->load('user', 'cart');
             Mail::to($inv->user->email)->send(new InvoiceMail($inv));
             Mail::to(env('MAIL_CONTACT'))->send(new LaporanBookingMail($inv));
             $inv->status = 'payment-verifed';
             $inv->save();
+            $inv->cart()->update(['status' => 'payment-verifed']);
             return response()->json('Success');
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 500);

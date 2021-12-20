@@ -154,6 +154,7 @@ Home Pandan Sari Dive & Water Sport
     <div class="card-body isi-inv">
         <div class="title">
             <h3>{{ strtoupper($data->nomor) }}</h3>
+            <h4>{{ date('d F Y', strtotime($data->created_at)) }}</h4>
             @if ($data->status == 'payment-unverifed')
             <h4 class="badge warning">Processing</h4>
             @elseif ($data->status == 'payment-rejected')

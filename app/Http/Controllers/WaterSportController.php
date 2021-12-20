@@ -45,7 +45,8 @@ class WaterSportController extends Controller
             'image' => $foto->hashName(),
             'deskripsi' => $request->description,
             'harga' => $request->harga,
-            'minimal' => $request->minimal
+            'minimal' => $request->minimal,
+            'limit' => $request->limit
         ]);
         $foto->storeAs('public/water-sport', $foto->hashName());
         return redirect()->route('admin.water-sport.index')->with('success', 'Berhasil menambah data');
@@ -88,6 +89,7 @@ class WaterSportController extends Controller
         $data->deskripsi = $request->description;
         $data->harga = $request->harga;
         $data->minimal = $request->minimal;
+        $data->limit = $request->limit;
         $foto = $request->file('foto');
         if ($foto) {
             Storage::disk('public')->delete('water-sport/' . $data->image);

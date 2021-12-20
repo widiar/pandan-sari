@@ -72,6 +72,14 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="limit">Maksimal Tiket per Hari</label>
+                <input type="number" required name="limit" class="form-control  @error('limit') is-invalid @enderror"
+                    value="{{ old('limit') }}">
+                @error('limit')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="foto">Foto</label>
                 <div class="img-frame">
                     <img src="https://via.placeholder.com/1080x1080.png?text=Image" alt="" class="img-crop">

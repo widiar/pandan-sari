@@ -33,6 +33,8 @@ class HomeController extends Controller
             $carts = [];
             $user = NULL;
         }
+        // $invoice = Invoice::with('cart')->where('status', 'payment-verifed')->get();
+        // dd($watersport[1]->getSisa());
         return view('home', compact('watersport', 'carts', 'user'));
     }
 
@@ -50,7 +52,7 @@ class HomeController extends Controller
     public function transaksi()
     {
         $user = Auth::user();
-        $invoices = Invoice::where('user_id', $user->id)->get();
+        $invoices = Invoice::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
         return view('transaksi', compact('invoices'));
     }
 
