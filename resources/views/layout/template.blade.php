@@ -144,20 +144,16 @@
 							<div class="row-new">
 								<div class="link">
 									<ul class="gtco-footer-links">
-										<li><a href="#">Parasailing</a></li>
-										<li><a href="#">Jetski</a></li>
-										<li><a href="#">Fly Fish</a></li>
-										<li><a href="#">Donut Slider</a></li>
-										<li><a href="#">Fly Board</a></li>
+										@foreach(getWaterSport(0, 5) as $ws)
+										<li><a href="{{ route('detail', $ws->id) }}">{{ $ws->nama }}</a></li>
+										@endforeach
 									</ul>
 								</div>
 								<div class="link">
 									<ul class="gtco-footer-links">
-										<li><a href="#">Water Ski</a></li>
-										<li><a href="#">Wake Board</a></li>
-										<li><a href="#">Snorkeling</a></li>
-										<li><a href="#">Scuba Diving</a></li>
-										<li><a href="#">Sea Walker</a></li>
+										@foreach(getWaterSport(5, 10) as $ws)
+										<li><a href="{{ route('detail', $ws->id) }}">{{ $ws->nama }}</a></li>
+										@endforeach
 									</ul>
 								</div>
 							</div>

@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-sm-4 col-xs-12"><br>
 					<div id="gtco-logo"><a href="/"><img src="{{asset('/gambar/logo.png')}}" style="float: left;"
-								class="logo" alt="" width="150" height="100"></div>
+								class="logo" alt="" width="50%"></div>
 				</div>
 
 				<div class="col-xs-8 text-right menu-1">
