@@ -159,6 +159,7 @@ Home Pandan Sari Dive & Water Sport
             <h4 class="badge warning">Processing</h4>
             @elseif ($data->status == 'payment-rejected')
             <h4 class="badge danger">Rejected</h4>
+            <h5>Alasan: {{ $data->alasan }}</h5>
             @else
             <h4 class="badge success">Successfully</h4>
             @endif

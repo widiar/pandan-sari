@@ -74,6 +74,21 @@ class AdminController extends Controller
         }
     }
 
+    public function rejectAlasanBooking(Request $request)
+    {
+        try {
+            $inv = Invoice::find($request->id);
+            $inv->alasan = $request->alasan;
+            $inv->save();
+            return response()->json([
+                'status' => 'Success',
+                'id' => $request->id
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
     public function transaksi()
     {
         $data = LaporanTransaksi::all();

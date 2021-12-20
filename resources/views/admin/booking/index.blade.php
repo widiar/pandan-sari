@@ -137,6 +137,34 @@
     </div>
 </div>
 
+<div class="modal fade" id="alasanRejectModal" tabindex="-1" role="dialog" aria-labelledby="pembayaranModal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="pembayaranModal">Alasan Reject</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('admin.booking.reject.reason') }}" method="POST" id="alasanForm" data-id="">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Alasan</label>
+                        <textarea name="alasan" id="alasan" cols="30" rows="10" class="form-control"
+                            required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Simpan</button>
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="detailModal" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="pembayaranModal" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -307,11 +335,31 @@
             }
         })
     })
+    
+    $(document).on('submit', '#alasanForm', function(e){
+        e.preventDefault()
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: {
+                id: $(this).data('id'),
+                alasan: $('#alasan').val()
+            },
+            success: (res) => {
+                formSubmit(formReject, res.id, 'rejected')
+            },
+            error: (res) => {
+                console.log(res.responseJSON)
+            }
+        })
+    })
 
     $(document).on('submit', '#form-reject', function(e){
         e.preventDefault()
         const id = $(this).data('id')
-        formSubmit($(this).attr('action'), id, 'rejected')
+        $('#alasanForm').data('id', id)
+        $('#alasanRejectModal').modal('show')
+        // formSubmit($(this).attr('action'), id, 'rejected')
     })
 
     $(document).on('submit', '#form-verif', function(e){

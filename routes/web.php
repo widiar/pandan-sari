@@ -43,6 +43,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::get('booking', [AdminController::class, 'booking'])->name('booking');
             Route::post('booking/verif', [AdminController::class, 'verifBooking'])->name('booking.verif');
             Route::post('booking/reject', [AdminController::class, 'rejectBooking'])->name('booking.reject');
+            Route::post('booking/reject/alasan', [AdminController::class, 'rejectAlasanBooking'])->name('booking.reject.reason');
 
             Route::get('transaksi', [AdminController::class, 'transaksi'])->name('transaksi');
             Route::post('transaksi/post', [AdminController::class, 'transaksiPost'])->name('transaksi.post');
