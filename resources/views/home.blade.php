@@ -357,7 +357,7 @@ Home Pandan Sari Dive & Water Sport
         $('.counter-cart').each(function() {
             const parent = $(this).parent()
             let counterCart = parseInt($(this).text())
-            if(counterCart <= 0){
+            if(counterCart <= 0 || isNaN(counterCart)){
                 parent.find('.btn-minus').css('cursor', 'not-allowed')
             } else {
                 parent.find('.btn-minus').css('cursor', 'pointer')
@@ -369,7 +369,7 @@ Home Pandan Sari Dive & Water Sport
             const parent = $(this).parent()
 			const maksimal = parseInt(parent.data('maksimal'))
             let counterCart = parseInt($(this).text())
-            if(counterCart >= maksimal){
+            if(counterCart >= maksimal || isNaN(counterCart)){
                 parent.find('.btn-plus').css('cursor', 'not-allowed')
             } else {
                 parent.find('.btn-plus').css('cursor', 'pointer')
@@ -540,7 +540,7 @@ Home Pandan Sari Dive & Water Sport
 		checkMaks()
 		$('.btn-plus').click(function(e){
 			const cekLogin = $(this).parent().data('disabled')
-			if(cekLogin.trim() == 'true'){
+			if(cekLogin.toString().trim() == 'true'){
 				e.preventDefault()
 			} else {
 				const cnt = parseInt($(this).parent().find('.counter-cart').text().trim())
@@ -558,7 +558,7 @@ Home Pandan Sari Dive & Water Sport
 		})
 		$('.btn-minus').click(function(e){
 			const cekLogin = $(this).parent().data('disabled')
-			if(cekLogin.trim() == 'true'){
+			if(cekLogin.toString().trim() == 'true'){
 				e.preventDefault()
 			} else {
 				const cnt = parseInt($(this).parent().find('.counter-cart').text().trim())
