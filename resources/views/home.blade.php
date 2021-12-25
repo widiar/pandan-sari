@@ -533,6 +533,7 @@ Home Pandan Sari Dive & Water Sport
 
 		$("#tanggal").datepicker({
 			minDate: 0,
+			dateFormat: 'yy-mm-dd'
 		});
 
 		totalAmount()

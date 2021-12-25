@@ -34,7 +34,7 @@
 
 <body>
     <div align="center">
-        <img src="https://ik.imagekit.io/prbydmwbm8c/logo_SpJLMNBG_.png" class="img-header" alt="logo stikom">
+        <img src="data:image/jpeg;base64,{{ base64_encode(@file_get_contents(url('https://ik.imagekit.io/prbydmwbm8c/logo_SpJLMNBG_.png'))) }}" class="img-header" alt="logo stikom">
     </div>
     <table class="kop">
         <td>
