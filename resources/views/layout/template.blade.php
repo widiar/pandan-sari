@@ -83,10 +83,10 @@
 		}
 
 		.last-row {
-			margin-left: 100px
+			margin-left: 60px
 		}
 
-		@media screen and (max-width: 768px) {
+		@media screen and (max-width: 900px) {
 			.row-c {
 				flex-direction: column;
 			}
