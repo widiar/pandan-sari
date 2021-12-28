@@ -149,7 +149,7 @@ Home Pandan Sari Dive & Water Sport
 	</div>
 </div>
 
-<div class="row">
+<div class="row" id="booking">
 	@foreach ($watersport as $data)
 	<div class="col-lg-4 col-md-4 col-sm-6">
 		<div class="fh5co-card-item">

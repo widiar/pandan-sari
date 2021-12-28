@@ -79,7 +79,7 @@ Home Pandan Sari Dive & Water Sport
     <img class="img-thumbnail w-50" src="{{ Storage::url('water-sport/' . $data->image) }}" alt="">
 </div>
 <h1 class="text-center">{{ $data->nama }}</h1>
-<h4>{{ $data->deskripsi }}</h4>
+<h4>{!! nl2br($data->deskripsi) !!}</h4>
 <h3>Harga Tiket Rp. {{ $data->harga }}</h3>
 <h4>Minimal : {{ $data->minimal }} Orang</h4>
 

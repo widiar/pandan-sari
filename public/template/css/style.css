@@ -356,12 +356,6 @@ figure {
     background: #fff;
     color: #09c6ab;
 }
-#gtco-header .form-wrap .tab-menu li.gtco-first a {
-    /* border-top-left-radius: 7px; */
-}
-#gtco-header .form-wrap .tab-menu li.gtco-second a {
-    /* border-top-right-radius: 7px; */
-}
 #gtco-header .form-wrap .tab-content {
     z-index: 10;
     position: relative;
@@ -1282,6 +1276,21 @@ form label {
     z-index: 2001;
     border-bottom: none !important;
 }
+.mobile-info {
+    display: none;
+}
+.desktop-info {
+    display: block;
+}
+@media screen and (max-width: 990px) {
+    .mobile-info {
+        display: block;
+    }
+    .desktop-info {
+        display: none;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .gtco-nav-toggle {
         display: block;

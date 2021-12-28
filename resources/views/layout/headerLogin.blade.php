@@ -7,6 +7,10 @@
                 <div class="row row-mt-15em">
                     @guest
                     <div class="logout">
+                        <div class="col-md-7 col-md-push-1 mt-text animate-box mobile-info" data-animate-effect="fadeInUp">
+                            <h1>PANDAN SARI</h1>
+                            <span class="intro-text-small">Dive & Watersport</span>
+                        </div>
                         <div class="col-md-4 animate-box" data-animate-effect="fadeInRight">
                             <div class="form-wrap">
                                 <div class="tab">
@@ -92,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-7 col-md-push-1 mt-text animate-box" data-animate-effect="fadeInUp">
+                        <div class="col-md-7 col-md-push-1 mt-text animate-box desktop-info" data-animate-effect="fadeInUp">
                             <h1>PANDAN SARI</h1>
                             <span class="intro-text-small">Dive & Watersport</span>
                         </div>

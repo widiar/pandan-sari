@@ -254,6 +254,16 @@
 			val = val.join('.').split('').reverse().join('')
 			return val
 		}
+		$(document).on('click', '.smoothScroll', function (event) {
+			const isHome = $(this).data('home')
+			if (isHome == 1){
+				event.preventDefault();
+				const link = $.attr(this, 'href').substr($.attr(this, 'href').search('#'), $.attr(this, 'href').length)
+				$('html, body').animate({
+					scrollTop: $(link).offset().top
+				}, 500);
+			}
+		});
 	</script>
 
 	@yield('script')

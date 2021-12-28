@@ -35,7 +35,8 @@ class HomeController extends Controller
         }
         // $invoice = Invoice::with('cart')->where('status', 'payment-verifed')->get();
         // dd($watersport[1]->getSisa());
-        return view('home', compact('watersport', 'carts', 'user'));
+        $isHome = 1;
+        return view('home', compact('watersport', 'carts', 'user', 'isHome'));
     }
 
     public function home()
