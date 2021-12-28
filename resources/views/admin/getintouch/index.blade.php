@@ -113,12 +113,12 @@
 
 @section('script')
 <script>
-    $('.btn-pesan').click(function(e){
+    $('.actionz').on('click', '.btn-pesan', function(e){
         const pesan = $(this).data('text')
         $('.isiPesan').text(pesan)
         $('#pesanModal').modal('show')
     })
-    $('.btn-reply').click(function(e){
+    $('.actionz').on('click', '.btn-reply', function(e){
         e.preventDefault()
         $('#idContact').val($(this).data('id'))
         $('#balasPesanModal').modal('show')
