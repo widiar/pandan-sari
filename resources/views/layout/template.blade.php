@@ -144,14 +144,14 @@
 							<div class="row-new">
 								<div class="link">
 									<ul class="gtco-footer-links">
-										@foreach(getWaterSport(0, 5) as $ws)
+										@foreach(getWaterSport(0, 6) as $ws)
 										<li><a href="{{ route('detail', $ws->id) }}">{{ $ws->nama }}</a></li>
 										@endforeach
 									</ul>
 								</div>
 								<div class="link">
 									<ul class="gtco-footer-links">
-										@foreach(getWaterSport(5, 10) as $ws)
+										@foreach(getWaterSport(6, 10) as $ws)
 										<li><a href="{{ route('detail', $ws->id) }}">{{ $ws->nama }}</a></li>
 										@endforeach
 									</ul>
