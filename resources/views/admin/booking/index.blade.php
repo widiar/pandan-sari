@@ -101,7 +101,8 @@
                         @foreach ($dt->cart as $item)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 {{ $item->watersport->nama }}
-                                <span class="badge badge-primary">{{ $item->jumlah }}</span>
+                                <span class="badge badge-secondary">{{ $item->jumlah }}</span>
+                                <span class="badge badge-primary">{{ date('d-m-Y', strtotime($item->tanggal)) }}</span>
                             </li> 
                         @endforeach
                         </ul>
