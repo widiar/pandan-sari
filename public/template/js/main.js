@@ -271,7 +271,7 @@
 	};
 
 	const oke = () => {
-		$('.copy').html(`&copy; 2021 <a target="_blank" href="https://ariwidiarsana.firebaseapp.com/">ITB Stikom Bali</a> Jimbaran`)
+		$('.copy').html(`&copy; 2021 <a target="_blank" href="https://ariwidiarsana.web.app/">ITB Stikom Bali</a> Jimbaran`)
 	}
 
 
@@ -289,7 +289,7 @@
 		contentWayPoint();
 		dropdown();
 		owlCarousel();
-		oke()
+		// oke()
 		goToTop();
 		loaderPage();
 		counterWayPoint();

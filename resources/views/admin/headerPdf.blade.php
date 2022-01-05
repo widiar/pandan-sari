@@ -14,6 +14,7 @@
 
         .kop {
             margin: 0 auto;
+            width: 400px;
             /* border: 1px solid black; */
         }
 
@@ -26,6 +27,8 @@
         .kop td {
             margin: 0;
             padding: 0 10px;
+            font-size: 10px;
+            text-align: center;
             /* color: #007bf7; */
         }
     </style>
@@ -38,18 +41,17 @@
     </div>
     <table class="kop">
         <td>
-            Alamat: Jl. xxxxxxxxxx
-        </td>
-        <td>
-            No. Tlp: 08123456789
+            Alamat: Jl. Pratama no. 104, Tanjung Benoa (CENTRAL PARKING)
         </td>
     </table>
     <table class="kop">
         <td>
-            Email: pandansari@gmail.com
+            No. Tlp: 081916404488
         </td>
+    </table>
+    <table class="kop">
         <td>
-            Email: pandansari@gmail.com
+            Email: pandansari569@gmail.com
         </td>
     </table>
     <hr style="width: 80%">

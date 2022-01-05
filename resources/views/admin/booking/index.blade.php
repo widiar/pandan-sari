@@ -78,6 +78,9 @@
                 <tr>
                     <th>NO</th>
                     <th>Invoice</th>
+                    <th>Nama Pembeli</th>
+                    <th>Tanggal</th>
+                    <th>Detail</th>
                     <th class="text-center">Aksi</th>
                     <th class="text-center">Status</th>
                 </tr>
@@ -91,14 +94,34 @@
                 <tr>
                     <td>{{ ++$no }}</td>
                     <td>{{ $dt->nomor }}</td>
+                    <td>{{ $dt->user->nama }}</td>
+                    <td>{{ date('d/m/y h:i A', strtotime($dt->created_at)) }}</td>
+                    <td>
+                        <ul class="list-group list-group-flush">
+                        @foreach ($dt->cart as $item)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ $item->watersport->nama }}
+                                <span class="badge badge-primary">{{ $item->jumlah }}</span>
+                            </li> 
+                        @endforeach
+                        </ul>
+                    </td>
                     <td class="text-center">
-                        <a href="{{ Storage::url('bukti-bayar/' . $dt->bukti_bayar) }}" class="bukti"
-                            data-status="{{ $dt->status }}" data-id="{{ $dt->id }}">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-receipt"></i></button>
-                        </a>
-                        <a href="{{ route('detail.invoice') }}" class="detail" data-id="{{ $dt->id }}">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i></button>
-                        </a>
+                        <div class="row justify-content-center">
+                            <a href="{{ Storage::url('bukti-bayar/' . $dt->bukti_bayar) }}" class="bukti mx-2"
+                                data-status="{{ $dt->status }}" data-id="{{ $dt->id }}">
+                                <button class="btn btn-sm btn-primary"><i class="fas fa-receipt"></i></button>
+                            </a>
+                            <a href="{{ route('detail.invoice') }}" class="detail mx-2" data-id="{{ $dt->id }}">
+                                <button class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i></button>
+                            </a>
+                            <form action="{{ route('admin.booking.destroy', $dt->id) }}" method="POST" class="deleted mx-2">
+                                @method("DELETE")
+                                @csrf
+                                <button class="btn btn-sm btn-danger" type="submit"><i
+                                        class="fas fa-trash"></i></button>
+                            </form>     
+                        </div>
                     </td>
                     <td class="text-center">
                         @if ($dt->status == 'payment-unverifed')

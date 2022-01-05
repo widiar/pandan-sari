@@ -6,6 +6,7 @@ use App\Mail\InvoiceMail;
 use App\Mail\LaporanBookingMail;
 use App\Mail\PaymentRejectMail;
 use App\Mail\ReplyContactMail;
+use App\Models\Cart;
 use App\Models\GetInTouch;
 use App\Models\Invoice;
 use App\Models\LaporanTransaksi;
@@ -40,7 +41,7 @@ class AdminController extends Controller
 
     public function booking()
     {
-        $data = Invoice::orderBy('created_at', 'desc')->get();
+        $data = Invoice::with(['user', 'cart'])->orderBy('created_at', 'desc')->get();
         return view('admin.booking.index', compact('data'));
     }
 
@@ -87,6 +88,15 @@ class AdminController extends Controller
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 500);
         }
+    }
+
+    public function destroyBooking($id)
+    {
+        $data = Invoice::find($id);
+        Storage::disk('public')->delete('bukti-bayar/' . $data->bukti_bayar);
+        Cart::where('invoice_id', $id)->delete();
+        $data->delete();
+        return response()->json('Sukses');
     }
 
     public function transaksi()

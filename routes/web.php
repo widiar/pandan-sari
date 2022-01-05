@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\AboutusController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WaterSportController;
@@ -44,6 +43,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::post('booking/verif', [AdminController::class, 'verifBooking'])->name('booking.verif');
             Route::post('booking/reject', [AdminController::class, 'rejectBooking'])->name('booking.reject');
             Route::post('booking/reject/alasan', [AdminController::class, 'rejectAlasanBooking'])->name('booking.reject.reason');
+            Route::delete('booking/delete/{id}', [AdminController::class, 'destroyBooking'])->name('booking.destroy');
 
             Route::get('transaksi', [AdminController::class, 'transaksi'])->name('transaksi');
             Route::post('transaksi/post', [AdminController::class, 'transaksiPost'])->name('transaksi.post');
