@@ -93,7 +93,7 @@
 
 @section('script')
 <script>
-    $('.btn-detail').click(function(e){
+    $('body').on('click', '.btn-detail', function(e){
         e.preventDefault()
         const url = $(this).attr('href')
         $('.img-detail').attr('src', url)
