@@ -128,7 +128,7 @@ class BookingController extends Controller
         ])->get();
         $err = [];
         foreach ($carts as $cart) {
-            $sisa = $cart->watersport->getSisa(date('d', strtotime($request->tanggal)));
+            $sisa = $cart->watersport->getSisa($request->tanggal);
             if (($sisa - $cart->jumlah) < 0) {
                 array_push($err, $cart->watersport->nama);
             }
