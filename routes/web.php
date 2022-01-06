@@ -53,6 +53,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
             Route::get('getintouch', [AdminController::class, 'contactus'])->name('get.intouch');
             Route::post('reply/pesan', [AdminController::class, 'replyPesan'])->name('reply.pesan');
+            Route::delete('getintouch/{id}/destroy', [AdminController::class, 'destroyGetInTouch'])->name('destroy.intouch');
         });
     });
 });
@@ -75,5 +76,3 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('invoices', [HomeController::class, 'invoiceMail'])->name('mail.invoice');
-
-Route::get('dev', [AdminController::class, 'dev']);

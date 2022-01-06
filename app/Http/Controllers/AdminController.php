@@ -178,6 +178,13 @@ class AdminController extends Controller
         }
     }
 
+    public function destroyGetInTouch($id)
+    {
+        $data = GetInTouch::find($id);
+        $data->delete();
+        return response()->json('Sukses');
+    }
+
     public function dev()
     {
         $markdown = new Markdown(view(), config('mail.markdown'));

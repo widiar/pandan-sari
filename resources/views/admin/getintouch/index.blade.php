@@ -41,11 +41,19 @@
                     <td>{{ $dt->email }}</td>
                     <td>{{ $dt->subject }}</td>
                     <td class="text-center">
-                        <button data-text="{{ $dt->pesan }}" class="btn btn-sm btn-primary btn-pesan"><i class="fas fa-envelope-open
-                            "></i></button>
-                        <a href="#" class="btn-reply" data-id="{{ $dt->id }}">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-reply"></i></button>
-                        </a>
+                        <div class="row justify-content-center">
+                            <button data-text="{{ $dt->pesan }}" class="btn btn-sm btn-primary btn-pesan mx-2"><i class="fas fa-envelope-open
+                                "></i></button>
+                            <a href="#" class="btn-reply mx-2" data-id="{{ $dt->id }}">
+                                <button class="btn btn-sm btn-primary"><i class="fas fa-reply"></i></button>
+                            </a>
+                            <form action="{{ route('admin.destroy.intouch', $dt->id) }}" method="POST" class="deleted mx-2">
+                                @method("DELETE")
+                                @csrf
+                                <button class="btn btn-sm btn-danger" type="submit"><i
+                                        class="fas fa-trash"></i></button>
+                            </form>
+                        </div>
                     </td>
                     <td class="text-center">
                         @if ($dt->is_reply == 0)
