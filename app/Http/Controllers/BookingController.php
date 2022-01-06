@@ -68,10 +68,16 @@ class BookingController extends Controller
     {
         $id = $request->id;
         $jumlah = $request->jumlah;
+        $isInput = $request->isInput;
         $cart = Cart::find($id);
         $watersport = WaterSport::find($cart->watersport_id);
-        $jml = $cart->jumlah + $jumlah;
-        $cart->jumlah = $jml;
+        if($isInput == 1) {
+            $jml = $jumlah;
+            $cart->jumlah = $jumlah;
+        }else{
+            $jml = $cart->jumlah + $jumlah;
+            $cart->jumlah = $jml;
+        }
         $cart->total = $watersport->harga * $jml;
         $cart->save();
         return response()->json([

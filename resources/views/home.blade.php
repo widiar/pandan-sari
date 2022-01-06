@@ -172,7 +172,7 @@ Home Pandan Sari Dive & Water Sport
 				$idCart = 0;
 				$isDisabled = '';
 				$cursor = '';
-				if($data->getSisa(date('d')) <= 0 || !Auth::check()){ 
+				if($data->getSisa(date('Y-m-d')) <= 0 || !Auth::check()){ 
 					$isDisabled='true' ; 
 					$cursor='not-allowed' ;
 					$counter='Tiket Habis' ; 
@@ -191,7 +191,7 @@ Home Pandan Sari Dive & Water Sport
 				@endphp
 			@endauth
 			<div class="counter" data-id="{{ $idCart }}" data-minimal="{{ $data->minimal }}"
-				data-disabled="{{ $isDisabled }}" data-maksimal="{{ $data->getSisa(date('d')) }}">
+				data-disabled="{{ $isDisabled }}" data-maksimal="{{ $data->getSisa(date('Y-m-d')) }}">
 				<div class="btn-counter btn-minus" style="cursor: {{ $cursor }}">-</div>
 				<div class="counter-cart">
 					{{-- <input type="number" placeholder="Login"> --}}
@@ -199,7 +199,12 @@ Home Pandan Sari Dive & Water Sport
 					Please Login
 					@endguest
 					@auth
-					{{ ($data->getSisa(date('d')) <= 0) ? 'Tiket Habis' : $counter }} @endauth 
+					@if($data->getSisa(date('Y-m-d')) <= 0) 
+					Tiket Habis
+					@else
+					<input type="number" value="{{ $counter }}" id="counterNumber">
+					@endif
+					@endauth
 				</div>
 				<div class="btn-counter btn-plus" style="cursor: {{ $cursor }}">+</div>
 				</div>
@@ -356,7 +361,8 @@ Home Pandan Sari Dive & Water Sport
 	const checkMinus = () => {
         $('.counter-cart').each(function() {
             const parent = $(this).parent()
-            let counterCart = parseInt($(this).text())
+            let counterCart = parseInt($(this).find('#counterNumber').val())
+			// console.log(counterCart)
             if(counterCart <= 0 || isNaN(counterCart)){
                 parent.find('.btn-minus').css('cursor', 'not-allowed')
             } else {
@@ -368,7 +374,7 @@ Home Pandan Sari Dive & Water Sport
         $('.counter-cart').each(function() {
             const parent = $(this).parent()
 			const maksimal = parseInt(parent.data('maksimal'))
-            let counterCart = parseInt($(this).text())
+            let counterCart = parseInt($(this).find('#counterNumber').val())
             if(counterCart >= maksimal || isNaN(counterCart)){
                 parent.find('.btn-plus').css('cursor', 'not-allowed')
             } else {
@@ -390,10 +396,10 @@ Home Pandan Sari Dive & Water Sport
         $('#totalInv').val(total)
     }
 
-	const counter = (pr, count) => {
+	const counter = (pr, count, isInput = 0) => {
         const parent = pr.parent()
         const idCart = parent.data('id')
-        let counterCart = parseInt(parent.find('.counter-cart').text().trim())
+        let counterCart = parseInt(parent.find('.counter-cart').find('#counterNumber').val())
         Swal.fire({
             title: 'Loading',
             timer: 20000,
@@ -408,6 +414,7 @@ Home Pandan Sari Dive & Water Sport
                     data: {
                         id: idCart,
                         jumlah: count,
+						isInput: isInput
                     },
                     complete: () => {
                         Swal.close()
@@ -415,7 +422,8 @@ Home Pandan Sari Dive & Water Sport
                     success: (res) => {
                         // console.log(res)
                         counterCart += count;
-                        parent.find('.counter-cart').text(counterCart)
+						if(isInput == 0)
+                        	parent.find('.counter-cart').find('#counterNumber').val(counterCart)
                         checkMinus()
 						checkMaks()
                         let total = toRupiah(res.total)
@@ -449,18 +457,22 @@ Home Pandan Sari Dive & Water Sport
                     },
                     success: (res) => {
                         // console.log(res)
-						parent.find('.counter-cart').text(0)
+						parent.find('.counter-cart').find('#counterNumber').val(0)
 						parent.closest('.fh5co-card-item').find('.amount_rp').text(0)
+						parent.data('id', 0)
                         totalAmount()
+						checkMinus()
+						checkMaks()
                     }
                 })
             }
         })
 	}
 
-	const addCart = (pr) => {
+	const addCart = (pr, minim = -1) => {
 		const parent = pr.parent()
-		const minim = parent.data('minimal')
+		if (minim == -1)
+			minim = parent.data('minimal')
         // const idCart = parent.data('id')
 		const satuan = parent.closest('.fh5co-card-item').find('.harga_satuan').text().split('.').join('').trim()
 		const idWa = parent.closest('.fh5co-card-item').find('.watersport').text()
@@ -485,7 +497,7 @@ Home Pandan Sari Dive & Water Sport
                     },
                     success: (res) => {
                         // console.log(res)
-						parent.find('.counter-cart').text(minim)
+						parent.find('.counter-cart').find('#counterNumber').val(minim)
 						parent.data('id', res.cart.id)
 						let total = toRupiah(res.total)
                         parent.closest('.fh5co-card-item').find('.amount_rp').text(total)
@@ -499,6 +511,7 @@ Home Pandan Sari Dive & Water Sport
 	}
 
 	$(document).ready(function() {
+		let oldValueCounter
 		$('#form-signup').submit(function(e){
 			const pw1 = $('#pw1').val()
 			const pw2 = $('#pw2').val()
@@ -544,7 +557,7 @@ Home Pandan Sari Dive & Water Sport
 			if(cekLogin.toString().trim() == 'true'){
 				e.preventDefault()
 			} else {
-				const cnt = parseInt($(this).parent().find('.counter-cart').text().trim())
+				const cnt = parseInt($(this).parent().find('.counter-cart').find('#counterNumber').val())
 				const maksimal = parseInt($(this).parent().data('maksimal'))
 				if (cnt <= 0){
 					addCart($(this))
@@ -562,7 +575,7 @@ Home Pandan Sari Dive & Water Sport
 			if(cekLogin.toString().trim() == 'true'){
 				e.preventDefault()
 			} else {
-				const cnt = parseInt($(this).parent().find('.counter-cart').text().trim())
+				const cnt = parseInt($(this).parent().find('.counter-cart').find('#counterNumber').val())
 				const min = parseInt($(this).parent().data('minimal'))
 				if(cnt <= 0) {
 					e.preventDefault()
@@ -573,6 +586,42 @@ Home Pandan Sari Dive & Water Sport
 					counter($(this), -1)
 				}
 			}
+		})
+		$('#counterNumber').focus(function(){
+			oldValueCounter = $(this).val()
+		})
+		$('#counterNumber').change(function(e){
+			let pr = $(this).parent()
+			let parent = pr.parent()
+			const maksimal = parseInt(parent.data('maksimal'))
+			let cek = parseInt($(this).val())
+			if(isNaN(cek)){
+				$(this).val(oldValueCounter)
+				return;
+			}
+			if(parent.data('id') == 0){
+				addCart(pr, $(this).val())
+			} else {
+				if($(this).val() <= 0){
+					deleteCart(pr)
+				} else if($(this).val() > maksimal){
+					e.preventDefault()
+					Swal.fire({
+						icon: 'info',
+						title: 'Tiket',
+						html: `Tiket maksimal ${maksimal}`
+					}).then(res => {
+						if(res.isConfirmed) {
+							$(this).val(maksimal)
+							counter(pr, maksimal, 1)
+						}
+					})
+				} 
+				else {
+					counter(pr, $(this).val(), 1)
+				}
+			}
+
 		})
 
 		$('#form-identitas').submit(function(e){

@@ -1,6 +1,6 @@
 @extends('admin.template.admin')
 
-@section('title', 'Tambah Water Sport')
+@section('title', 'Edit Water Sport')
 
 @section('css')
 <style>

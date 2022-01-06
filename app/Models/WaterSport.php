@@ -16,8 +16,13 @@ class WaterSport extends Model
         return $this->hasMany(Cart::class, 'watersport_id', 'id');
     }
 
-    public function getSisa($day)
+    public function getSisa($date)
     {
-        return $this->limit -  $this->cart()->where('status', 'payment-verifed')->whereDay('tanggal', $day)->count();
+        $cek = $this->cart()->where('status', 'payment-verifed')->where('tanggal', $date)->get();
+        $jumlah = 0;
+        foreach($cek as $c){
+            $jumlah += $c->jumlah;
+        }
+        return $this->limit - $jumlah;
     }
 }

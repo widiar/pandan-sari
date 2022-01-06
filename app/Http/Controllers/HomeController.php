@@ -17,6 +17,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        // dd(date('Y-m-d'));
         $watersport = WaterSport::all();
         if (Auth::check()) {
             $user = User::find(Auth::user()->id);
