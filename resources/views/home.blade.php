@@ -294,8 +294,8 @@ Home Pandan Sari Dive & Water Sport
 									alt="">
 							</div>
 							<div class="bank-text">
-								<h3>a.n. Edward Larry Page</h3>
-								<h4>5138494651354</h4>
+								<h3>a.n. I Made Agus Sujata</h3>
+								<h4>7720578128</h4>
 							</div>
 						</div>
 						<div class="form-group">
