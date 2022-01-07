@@ -7,8 +7,8 @@
 - Install **[wkhtml](https://wkhtmltopdf.org/downloads.html)** set installasinya di folder "C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
 - Buat database bernama **pandan-sari**
 - Copy file .env.example menjadi .env
-- Isikan di file .env MAIL_USERNAME dan MAIL_CONTACT itu email yang akan digunakan
-- Isikan di file .env MAIL_PASSWORD itu password dari email
+- Isikan di file .env **MAIL_USERNAME** dan **MAIL_CONTACT** itu email yang akan digunakan
+- Isikan di file .env **MAIL_PASSWORD** itu password dari email
 - Buka cmd atau git bash, ketikkan **php artisan key:generate**
 - Buka cmd atau git bash, ketikkan **php artisan migrate --seed**
 
