@@ -96,7 +96,8 @@ class HomeController extends Controller
 
     public function contact()
     {
-        return view('contact');
+        $contactus = GetInTouch::where('is_showing', 1)->get();
+        return view('contact', compact('contactus'));
     }
 
     public function sendContact(Request $request)

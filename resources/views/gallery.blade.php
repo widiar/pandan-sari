@@ -24,7 +24,7 @@ Home Pandan Sari Dive & Water Sport
     .img-crop {
         object-fit: cover;
         object-position: center;
-        height: 100px;
+        height: 200px;
         width: 100%;
     }
 
@@ -137,7 +137,7 @@ Home Pandan Sari Dive & Water Sport
 
                 <div class="col-lg-4 col-md-6 gallery-item filter-coba">
                     <div class="gallery-wrap">
-                        <img src="{{ Storage::url('gallery/') . $dt->file }}" class="img-fluid" alt="">
+                        <img src="{{ Storage::url('gallery/') . $dt->file }}" class="img-fluid img-crop img-thumbnail" alt="">
                         <div class="gallery-info">
                             <h4>{{ $dt->nama }}</h4>
                             <div class="gallery-links">

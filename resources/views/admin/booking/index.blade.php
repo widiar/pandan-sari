@@ -109,10 +109,6 @@
                     </td>
                     <td class="text-center">
                         <div class="row justify-content-center">
-                            <a href="{{ Storage::url('bukti-bayar/' . $dt->bukti_bayar) }}" class="bukti mx-2"
-                                data-status="{{ $dt->status }}" data-id="{{ $dt->id }}">
-                                <button class="btn btn-sm btn-primary"><i class="fas fa-receipt"></i></button>
-                            </a>
                             <a href="{{ route('detail.invoice') }}" class="detail mx-2" data-id="{{ $dt->id }}">
                                 <button class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i></button>
                             </a>

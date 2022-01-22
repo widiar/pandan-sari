@@ -53,6 +53,17 @@
                                 <button class="btn btn-sm btn-danger" type="submit"><i
                                         class="fas fa-trash"></i></button>
                             </form>
+                            <form action="{{ route('admin.approve.intouch', $dt->id) }}"
+                                data-text="{{ $dt->is_showing == 0 ? 'show' : 'hide' }}" id="form-approve" method="POST" class="approve mx-2">
+                                @csrf
+                                @if($dt->is_showing == 0)
+                                <button class="btn btn-sm btn-success" type="submit"><i
+                                        class="fas fa-check"></i></button>
+                                @else
+                                <button class="btn btn-sm btn-danger" type="submit"><i
+                                    class="fas fa-minus"></i></button>
+                                @endif
+                            </form>
                         </div>
                     </td>
                     <td class="text-center">
@@ -60,6 +71,11 @@
                         <h3 class="badge badge-warning">Belum Dibalas</h3>
                         @else
                         <h3 class="badge badge-success">Sudah Dibalas</h3>
+                        @endif
+                        @if($dt->is_showing == 1)
+                        <h3 class="badge badge-success">Showed</h3>
+                        @else
+                        <h3 class="badge badge-info">Not Showed</h3>
                         @endif
                     </td>
                 </tr>
@@ -130,6 +146,63 @@
         e.preventDefault()
         $('#idContact').val($(this).data('id'))
         $('#balasPesanModal').modal('show')
+    })
+
+    $('#form-approve').submit(function(e){
+        e.preventDefault()
+        let txt
+        if($(this).data('text') == 'show') {
+            txt = 'menampilkan'
+        } else{
+            txt = 'tidak menampilkan'
+        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Anda ${txt} pesan ini di halaman Contact Us`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              $.ajax({
+                  url: $(this).attr('action'),
+                  method: 'POST',
+                  data: {
+                      text: $(this).data('text')
+                  },
+                  beforeSend: () => {
+                    Swal.fire({
+                        text: 'Procesing',
+                        timer: 2000,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            Swal.stopTimer()
+                        }
+                    })
+                  },
+                  success: function(res){
+                    console.log(res)
+                    Swal.close()
+                    Swal.fire({
+                        title: 'Success!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        window.location.href = "";
+                    }) 
+                  },
+                  error: (res) => {
+                    Swal.fire("Oops", "Something Wrong!", "error");
+                    console.log(res.responseJSON)
+                  }
+              })
+            }
+        })
     })
 
     $('#formBalasPesan').submit(function(e){

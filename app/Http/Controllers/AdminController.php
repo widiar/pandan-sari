@@ -188,23 +188,20 @@ class AdminController extends Controller
         return response()->json('Sukses');
     }
 
+    public function approveGetInTouch(Request $request, $id)
+    {
+        $data = GetInTouch::find($id);
+        if($request->text == 'show'){
+            $data->is_showing = 1;
+        } else {
+            $data->is_showing = 0;
+        }
+        $data->save();
+        return response()->json('Sukses');
+    }
+
     public function dev()
     {
-        Xendit::setApiKey(env('XENDIT_SECRET_KEY'));
-        $idInv = uniqid('INV/');
-        $params = [
-            'external_id' => $idInv,
-            'amount' => 200000,
-            'customer' => [
-                'given_names' => 'Milla',
-                'email' => 'Milla@mail.com'
-            ],
-            'payer_email' => 'mila@mail.com',
-            // 'merchant_profile_picture_url' => 'https://ik.imagekit.io/prbydmwbm8c/logo_SpJLMNBG_.png',
-            'success_redirect_url' => route('home', ['callback' => Crypt::encryptString($idInv)]),
-            'currency' => 'IDR'
-        ];
-        $inv = XenInv::create($params);
-        dd($inv);
+        //
     }
 }

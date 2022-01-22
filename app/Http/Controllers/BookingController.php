@@ -160,7 +160,7 @@ class BookingController extends Controller
 
         Xendit::setApiKey(env('XENDIT_SECRET_KEY'));
         $params = [
-            'external_id' => $inv,
+            'external_id' => strtoupper($inv),
             'amount' => $invoice->total,
             'customer' => [
                 'given_names' => $user->nama,

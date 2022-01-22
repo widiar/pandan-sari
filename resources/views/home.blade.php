@@ -515,12 +515,14 @@ Home Pandan Sari Dive & Water Sport
 
 	$(document).ready(function() {
 		let cekcallback = $('.callback').html()
+		let urlTransaksi = `{{ route('transaksi') }}`
 		if (cekcallback != undefined){
-			Swal.fire(
-				'Success',
-				'Pembayaran telah berhasil. Silahkan cek email untuk melihat bukti transaksi.',
-				'success'
-			).then(res => {
+			Swal.fire({
+				title: 'Success',
+				icon: 'success',
+				html: `Pembayaran berhasil. Silahkan cek email anda untuk melihat bukti transaksi. <br>
+						Atau kunjungi link <b><a href="${urlTransaksi}">Akun - Transaksi</a></b>.`,
+			}).then(res => {
 				if(res.isConfirmed) window.location.href = '{{ route("home") }}'
 			})
 		}
@@ -625,7 +627,19 @@ Home Pandan Sari Dive & Water Sport
 				return;
 			}
 			if(parent.data('id') == 0){
-				addCart(pr, $(this).val())
+				if($(this).val() > maksimal){
+					e.preventDefault()
+					Swal.fire({
+						icon: 'info',
+						title: 'Tiket',
+						html: `Tiket maksimal ${maksimal}`
+					}).then(res => {
+						if(res.isConfirmed) {
+							$(this).val(maksimal)
+							addCart(pr, $(this).val())
+						}
+					})
+				} 
 			} else {
 				if($(this).val() <= 0){
 					deleteCart(pr)

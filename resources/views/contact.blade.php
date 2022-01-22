@@ -81,6 +81,24 @@ Pandan Sari Dive & Water Sport
     </fieldset>
 </form>
 
+<hr style="margin-top: 100px">
+<div class="text-center">
+    <h2>Apa Kata Mereka</h2>
+</div>
+<hr>
+<div class="row">
+    @foreach ($contactus as $con)
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3>{{ $con->nama }}</h3>
+                <p>{{ $con->pesan }}</p>
+            </div>
+        </div>
+    </div>
+    @endforeach
+</div>
+
 @endsection
 
 @section('about')

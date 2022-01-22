@@ -8,8 +8,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WaterSportController;
 
-Route::get('dev', [AdminController::class, 'dev']);
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('booking', [BookingController::class, 'booking'])->name('booking');
 Route::get('gallery', [HomeController::class, 'gallery'])->name('gallery');
@@ -65,6 +63,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::get('getintouch', [AdminController::class, 'contactus'])->name('get.intouch');
             Route::post('reply/pesan', [AdminController::class, 'replyPesan'])->name('reply.pesan');
             Route::delete('getintouch/{id}/destroy', [AdminController::class, 'destroyGetInTouch'])->name('destroy.intouch');
+            Route::post('getintouch/{id}/show', [AdminController::class, 'approveGetInTouch'])->name('approve.intouch');
         });
     });
 });
