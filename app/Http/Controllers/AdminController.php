@@ -16,7 +16,10 @@ use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Xendit\Xendit;
+use Xendit\Invoice as XenInv;
 
 class AdminController extends Controller
 {
@@ -187,13 +190,21 @@ class AdminController extends Controller
 
     public function dev()
     {
-        $markdown = new Markdown(view(), config('mail.markdown'));
-        $url = '#';
-        $invoice = Invoice::find(1);
-        $invoice->load('user');
-        return $markdown->render('email.laporanBooking', compact('invoice'));
-        // $inv = Invoice::find(1);
-        // $inv->load('user', 'cart');
-        // dd($inv);
+        Xendit::setApiKey(env('XENDIT_SECRET_KEY'));
+        $idInv = uniqid('INV/');
+        $params = [
+            'external_id' => $idInv,
+            'amount' => 200000,
+            'customer' => [
+                'given_names' => 'Milla',
+                'email' => 'Milla@mail.com'
+            ],
+            'payer_email' => 'mila@mail.com',
+            // 'merchant_profile_picture_url' => 'https://ik.imagekit.io/prbydmwbm8c/logo_SpJLMNBG_.png',
+            'success_redirect_url' => route('home', ['callback' => Crypt::encryptString($idInv)]),
+            'currency' => 'IDR'
+        ];
+        $inv = XenInv::create($params);
+        dd($inv);
     }
 }

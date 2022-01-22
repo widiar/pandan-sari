@@ -172,11 +172,6 @@ Home Pandan Sari Dive & Water Sport
 				$idCart = 0;
 				$isDisabled = '';
 				$cursor = '';
-				if($data->getSisa(date('Y-m-d')) <= 0 || !Auth::check()){ 
-					$isDisabled='true' ; 
-					$cursor='not-allowed' ;
-					$counter='Tiket Habis' ; 
-				} 
 			@endphp 
 			@auth 
 				@php 
@@ -191,7 +186,7 @@ Home Pandan Sari Dive & Water Sport
 				@endphp
 			@endauth
 			<div class="counter" data-id="{{ $idCart }}" data-minimal="{{ $data->minimal }}"
-				data-disabled="{{ $isDisabled }}" data-maksimal="{{ $data->getSisa(date('Y-m-d')) }}">
+				data-disabled="{{ $isDisabled }}" data-maksimal="{{ $data->limit }}">
 				<div class="btn-counter btn-minus" style="cursor: {{ $cursor }}">-</div>
 				<div class="counter-cart">
 					{{-- <input type="number" placeholder="Login"> --}}
@@ -199,11 +194,7 @@ Home Pandan Sari Dive & Water Sport
 					Please Login
 					@endguest
 					@auth
-					@if($data->getSisa(date('Y-m-d')) <= 0) 
-					Tiket Habis
-					@else
-					<input type="number" value="{{ $counter }}" id="counterNumber">
-					@endif
+					<input type="number" value="{{ $counter }}" class="counterNumber">
 					@endauth
 				</div>
 				<div class="btn-counter btn-plus" style="cursor: {{ $cursor }}">+</div>
@@ -270,10 +261,11 @@ Home Pandan Sari Dive & Water Sport
 							<input type="text" required class="form-control" name="tlp"
 								placeholder="Masukkan No. Telepon" value="{{ @$user->no_tlp }}">
 						</div>
+						<input type="hidden" name="totalInv" id="totalInv" value="">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Selanjutnya</button>
+						<button type="submit" class="btn btn-primary">Bayar</button>
 					</div>
 				</form>
 			</div>
@@ -287,7 +279,7 @@ Home Pandan Sari Dive & Water Sport
 				<div class="modal-header">
 					<h3 class="modal-title" id="pembayaranModal">Pembayaran</h3>
 				</div>
-				<form action="{{ route('make.invoice') }}" method="POST" id="form-pembayaran"
+				<form action="#" method="POST" id="form-pembayaran"
 					enctype="multipart/form-data">
 					@csrf
 					<div class="modal-body">
@@ -321,7 +313,6 @@ Home Pandan Sari Dive & Water Sport
 						<img src="https://via.placeholder.com/1080x1080.png?text=BuktiBayar" alt=""
 							class="img-thumbnail img-detail">
 						<small>Klik Gambar Untuk Lihat Detail</small>
-						<input type="hidden" name="totalInv" id="totalInv" value="">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -347,6 +338,13 @@ Home Pandan Sari Dive & Water Sport
 			</div>
 		</div>
 	</div>
+
+	@if(session('callback-success'))
+	<div class="alert alert-success callback" style="display: none">
+		{{session('callback-success')}}
+	</div>
+	@endif
+
 	@endsection
 
 	@section('about')
@@ -361,7 +359,7 @@ Home Pandan Sari Dive & Water Sport
 	const checkMinus = () => {
         $('.counter-cart').each(function() {
             const parent = $(this).parent()
-            let counterCart = parseInt($(this).find('#counterNumber').val())
+            let counterCart = parseInt($(this).find('.counterNumber').val())
 			// console.log(counterCart)
             if(counterCart <= 0 || isNaN(counterCart)){
                 parent.find('.btn-minus').css('cursor', 'not-allowed')
@@ -374,7 +372,7 @@ Home Pandan Sari Dive & Water Sport
         $('.counter-cart').each(function() {
             const parent = $(this).parent()
 			const maksimal = parseInt(parent.data('maksimal'))
-            let counterCart = parseInt($(this).find('#counterNumber').val())
+            let counterCart = parseInt($(this).find('.counterNumber').val())
             if(counterCart >= maksimal || isNaN(counterCart)){
                 parent.find('.btn-plus').css('cursor', 'not-allowed')
             } else {
@@ -399,7 +397,7 @@ Home Pandan Sari Dive & Water Sport
 	const counter = (pr, count, isInput = 0) => {
         const parent = pr.parent()
         const idCart = parent.data('id')
-        let counterCart = parseInt(parent.find('.counter-cart').find('#counterNumber').val())
+        let counterCart = parseInt(parent.find('.counter-cart').find('.counterNumber').val())
         Swal.fire({
             title: 'Loading',
             timer: 20000,
@@ -423,7 +421,7 @@ Home Pandan Sari Dive & Water Sport
                         // console.log(res)
                         counterCart += count;
 						if(isInput == 0)
-                        	parent.find('.counter-cart').find('#counterNumber').val(counterCart)
+                        	parent.find('.counter-cart').find('.counterNumber').val(counterCart)
                         checkMinus()
 						checkMaks()
                         let total = toRupiah(res.total)
@@ -457,7 +455,7 @@ Home Pandan Sari Dive & Water Sport
                     },
                     success: (res) => {
                         // console.log(res)
-						parent.find('.counter-cart').find('#counterNumber').val(0)
+						parent.find('.counter-cart').find('.counterNumber').val(0)
 						parent.closest('.fh5co-card-item').find('.amount_rp').text(0)
 						parent.data('id', 0)
                         totalAmount()
@@ -497,7 +495,7 @@ Home Pandan Sari Dive & Water Sport
                     },
                     success: (res) => {
                         // console.log(res)
-						parent.find('.counter-cart').find('#counterNumber').val(minim)
+						parent.find('.counter-cart').find('.counterNumber').val(minim)
 						parent.data('id', res.cart.id)
 						let total = toRupiah(res.total)
                         parent.closest('.fh5co-card-item').find('.amount_rp').text(total)
@@ -511,6 +509,16 @@ Home Pandan Sari Dive & Water Sport
 	}
 
 	$(document).ready(function() {
+		let cekcallback = $('.callback').html()
+		if (cekcallback != undefined){
+			Swal.fire(
+				'Success',
+				'Pembayaran telah berhasil. Silahkan cek email untuk melihat bukti transaksi.',
+				'success'
+			).then(res => {
+				if(res.isConfirmed) window.location.href = '{{ route("home") }}'
+			})
+		}
 		let oldValueCounter
 		$('#form-signup').submit(function(e){
 			const pw1 = $('#pw1').val()
@@ -557,7 +565,7 @@ Home Pandan Sari Dive & Water Sport
 			if(cekLogin.toString().trim() == 'true'){
 				e.preventDefault()
 			} else {
-				const cnt = parseInt($(this).parent().find('.counter-cart').find('#counterNumber').val())
+				const cnt = parseInt($(this).parent().find('.counter-cart').find('.counterNumber').val())
 				const maksimal = parseInt($(this).parent().data('maksimal'))
 				if (cnt <= 0){
 					addCart($(this))
@@ -575,7 +583,7 @@ Home Pandan Sari Dive & Water Sport
 			if(cekLogin.toString().trim() == 'true'){
 				e.preventDefault()
 			} else {
-				const cnt = parseInt($(this).parent().find('.counter-cart').find('#counterNumber').val())
+				const cnt = parseInt($(this).parent().find('.counter-cart').find('.counterNumber').val())
 				const min = parseInt($(this).parent().data('minimal'))
 				if(cnt <= 0) {
 					e.preventDefault()
@@ -587,10 +595,10 @@ Home Pandan Sari Dive & Water Sport
 				}
 			}
 		})
-		$('#counterNumber').focus(function(){
+		$('.counterNumber').focus(function(){
 			oldValueCounter = $(this).val()
 		})
-		$('#counterNumber').change(function(e){
+		$('.counterNumber').change(function(e){
 			let pr = $(this).parent()
 			let parent = pr.parent()
 			const maksimal = parseInt(parent.data('maksimal'))
@@ -632,8 +640,9 @@ Home Pandan Sari Dive & Water Sport
 				data: $(this).serialize(),
 				success: (res) => {
 					if(res.status == 'Success') {
-						$('#bayarModal').modal('hide')
-						$('#transaksiModal').modal('show')
+						// $('#bayarModal').modal('hide')
+						// $('#transaksiModal').modal('show')
+						window.location.href = res.invoice.invoice_url
 					} else {
 						Swal.fire({
 							icon: 'info',
@@ -648,6 +657,7 @@ Home Pandan Sari Dive & Water Sport
 		})
 		$('#form-pembayaran').submit(function(e){
 			e.preventDefault()
+			return
 			$.ajax({
 				url: $(this).attr('action'),
 				method: $(this).attr('method'),

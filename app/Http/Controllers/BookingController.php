@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InvoiceMail;
+use App\Mail\LaporanBookingMail;
 use App\Models\Cart;
 use App\Models\Invoice;
 use App\Models\User;
 use App\Models\WaterSport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
+use Xendit\Xendit;
+use Xendit\Invoice as XenInv;
 
 class BookingController extends Controller
 {
     public function booking()
     {
         if (Auth::check()) {
-            $user = Auth::user();
+            $user = User::find(Auth::user()->id);
             $user->load(['cart' => function ($q) {
                 $q->where('status', 'unpaid')->orderBy('tanggal');
             }]);
@@ -122,7 +128,7 @@ class BookingController extends Controller
             ['tanggal', NULL]
         ])->update(['tanggal' => $request->tanggal]);
         $carts = Cart::with('watersport')->where([
-            ['status', 'unpaid'],
+            ['status', 'payment-verifed'],
             ['user_id', $user->id],
             ['tanggal', $request->tanggal]
         ])->get();
@@ -140,10 +146,75 @@ class BookingController extends Controller
                 'status' => 'tanggal'
             ]);
         }
+
         return response()->json([
-            'status' => 'Success'
+            'hm' => 'ok'
+        ]);
+
+        $inv = uniqid('INV/');
+        $invoice = Invoice::create([
+            'user_id' => $user->id,
+            'nomor' => strtoupper($inv),
+            'bukti_bayar' => 'xendit',
+            'total' => $request->totalInv,
+            'status' => 'payment-unverifed'
+        ]);
+        //update cart
+        Cart::where('user_id', $user->id)->where('status', 'unpaid')->update(['status' => 'payment-unverifed', 'invoice_id' => $invoice->id]);
+
+        Xendit::setApiKey(env('XENDIT_SECRET_KEY'));
+        $params = [
+            'external_id' => $inv,
+            'amount' => $invoice->total,
+            'customer' => [
+                'given_names' => $user->nama,
+                'email' => $user->email
+            ],
+            'payer_email' => $user->email,
+            'success_redirect_url' => route('home', ['callback' => Crypt::encryptString($invoice->id)]),
+            'currency' => 'IDR'
+        ];
+        $xenInv = XenInv::create($params);
+        
+        return response()->json([
+            'status' => 'Success',
+            'invoice' => $xenInv,
         ]);
     }
+
+    public function xenditInvoiceCallback(Request $request)
+    {
+        $callbackToken = $request->header('x-callback-token');
+        if($callbackToken == env('XENDIT_CALLBACK_TOKEN')){
+            $responseArray = $request->json()->all();
+            $inv = Invoice::where('nomor', $responseArray['external_id'])
+                ->with(['user', 'cart'])
+                ->first();
+            if($inv){
+                Mail::to($inv->user->email)->send(new InvoiceMail($inv));
+                Mail::to(env('MAIL_CONTACT'))->send(new LaporanBookingMail($inv));
+                $inv->status = 'payment-verifed';
+                $inv->save();
+                $inv->cart()->update(['status' => 'payment-verifed']);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Sucess',
+                    'data' => $inv
+                ]);            
+            }else{
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Invoice Not Found',
+                ]);            
+            }
+        }else{
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Wrong callback token'
+            ]);
+        }
+    }
+
 
     public function invoice(Request $request)
     {

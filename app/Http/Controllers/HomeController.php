@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ContactMail;
+use App\Mail\InvoiceMail;
+use App\Mail\LaporanBookingMail;
 use App\Models\Gallery;
 use App\Models\GetInTouch;
 use App\Models\Invoice;
@@ -10,14 +12,35 @@ use App\Models\User;
 use App\Models\WaterSport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // dd(date('Y-m-d'));
+        //callback invoice local
+        if(isset($request->callback)){
+            $invnumber = Crypt::decryptString($request->callback);
+            $inv = Invoice::where('id', $invnumber)->first();
+            $request->session()->flash('callback-success', 'Pembayaran Berhasil');
+            if($inv){
+                //kirim email dll
+                if(env('APP_ENV') == 'local') {
+                    Mail::to($inv->user->email)->send(new InvoiceMail($inv));
+                    Mail::to(env('MAIL_CONTACT'))->send(new LaporanBookingMail($inv));
+                    $inv->status = 'payment-verifed';
+                    $inv->save();
+                    $inv->cart()->update(['status' => 'payment-verifed']);
+                }
+                $request->session()->flash('callback-success', 'Pembayaran Berhasil');
+            }
+        } else{
+            $request->session()->forget('callback-success');
+        }
+
         $watersport = WaterSport::all();
         if (Auth::check()) {
             $user = User::find(Auth::user()->id);

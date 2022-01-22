@@ -8,6 +8,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WaterSportController;
 
+Route::get('dev', [AdminController::class, 'dev']);
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('booking', [BookingController::class, 'booking'])->name('booking');
 Route::get('gallery', [HomeController::class, 'gallery'])->name('gallery');
@@ -35,6 +37,8 @@ Route::post('/admin/login', [AdminController::class, 'login']);
 Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
 
 Route::post('check/email', [AuthController::class, 'emailCheck'])->name('check.email');
+
+Route::get('callback-xendit', [BookingController::class, 'xenditInvoiceCallback']);
 
 //admin
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -76,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('booking/delete', [BookingController::class, 'delete'])->name('delete.booking');
     Route::post('booking/delete/all', [BookingController::class, 'deleteAll'])->name('delete.all.booking');
     Route::post('booking/post/identitas', [BookingController::class, 'identitas'])->name('identitas');
-    Route::post('booking/invoice', [BookingController::class, 'invoice'])->name('make.invoice');
+    // Route::post('booking/invoice', [BookingController::class, 'invoice'])->name('make.invoice');
 
     Route::get('akun', [HomeController::class, 'akun'])->name('akun');
     Route::post('akun', [HomeController::class, 'updateAkun']);
