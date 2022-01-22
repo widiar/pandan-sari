@@ -247,6 +247,11 @@ Home Pandan Sari Dive & Water Sport
 								value="{{ @$carts[0]->tanggal }}">
 						</div>
 						<div class="form-group">
+							<label for="">Jam</label>
+							<input name="jam" id="jam" required type="text" class="form-control timepicker"
+								value="{{ @$carts[0]->jam }}">
+						</div>
+						<div class="form-group">
 							<label for="nama">Nama Lengkap</label>
 							<input type="text" required class="form-control" name="nama"
 								placeholder="Masukkan Nama Lengkap" value="{{ @$user->nama }}">
@@ -555,6 +560,18 @@ Home Pandan Sari Dive & Water Sport
 		$("#tanggal").datepicker({
 			minDate: 0,
 			dateFormat: 'yy-mm-dd'
+		});
+
+		$('.timepicker').timepicker({
+			timeFormat: 'h:mm p',
+			interval: 15,
+			minTime: '08:30',
+			maxTime: '5:00pm',
+			startTime: '08:30',
+			dynamic: false,
+			dropdown: true,
+			scrollbar: true,
+			zindex: 9999999
 		});
 
 		totalAmount()

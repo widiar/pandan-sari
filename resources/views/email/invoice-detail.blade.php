@@ -231,7 +231,7 @@
 
                                 </td>
                                 <td valign="top" style="padding: 15px; text-align: center;">
-                                    {{ date('j F Y', strtotime($cart->tanggal)) }}
+                                    {{ date('j F Y', strtotime($cart->tanggal))  . " " . $cart->jam  }}
                                 </td>
                                 <td valign="top" style="padding: 15px; text-align: center;">
                                     {{ $cart->jumlah }}

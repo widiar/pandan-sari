@@ -66,6 +66,8 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
 	@yield('css')
 
 	<style>
@@ -232,6 +234,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
 	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 	<!-- Main -->
 	<script src="{{asset('template/js/main.js')}}"></script>

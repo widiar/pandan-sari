@@ -122,11 +122,6 @@ class BookingController extends Controller
         $user->alamat = $request->alamat;
         $user->no_tlp = $request->tlp;
         $user->save();
-        Cart::with('watersport')->where([
-            ['status', 'unpaid'],
-            ['user_id', $user->id],
-            ['tanggal', NULL]
-        ])->update(['tanggal' => $request->tanggal]);
         $carts = Cart::with('watersport')->where([
             ['status', 'payment-verifed'],
             ['user_id', $user->id],
@@ -146,10 +141,11 @@ class BookingController extends Controller
                 'status' => 'tanggal'
             ]);
         }
-
-        return response()->json([
-            'hm' => 'ok'
-        ]);
+        Cart::with('watersport')->where([
+            ['status', 'unpaid'],
+            ['user_id', $user->id],
+            ['tanggal', NULL]
+        ])->update(['tanggal' => $request->tanggal, 'jam' => $request->jam]);
 
         $inv = uniqid('INV/');
         $invoice = Invoice::create([
