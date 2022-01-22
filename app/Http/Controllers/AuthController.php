@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ConfirmEmail;
+use App\Mail\ResetPassword;
 use App\Models\Cart;
+use App\Models\PasswordReset;
 use App\Models\TokenUser;
 use App\Models\User;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -82,5 +86,67 @@ class AuthController extends Controller
         $request->session()->forget('booking');
         $request->session()->flush();
         return redirect()->route('home');
+    }
+
+    public function lupapassword(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            if ($user->is_active == 0 && $user->role != 1) {
+                return redirect()->route('lupapassword')->with('error', 'Akun anda belum di verifikasi. Silahkan cek email untuk verifikasi terlebih dahulu.')->withInput();
+            } else {
+                PasswordReset::where('email', $request->email)->delete();
+                $tok = base64_encode(random_bytes(17));
+                PasswordReset::insert([
+                    'email' => $request->email,
+                    'token' => $tok,
+                    'created_at' => Carbon::now()
+                ]);
+                Mail::to($request->email)->send(new ResetPassword($request->email, $tok));
+                return redirect()->route('lupapassword')->with('success', 'Silahkan Cek Email Anda.');
+            }
+        } else {
+            return redirect()->route('lupapassword')->with('error', 'Email ini tidak terdaftar')->withInput();
+        }
+    }
+
+    public function reset(Request $request)
+    {
+        $email = $request->email;
+        $token = urldecode($request->token);
+
+        $user = PasswordReset::where('email', $email)->firstOrFail();
+        $expire = new DateTime($user->created_at);
+        $expire->modify('+1 hour');
+        if (new DateTime() < $expire) {
+            if (strcmp($token, $user->token) == 0) {
+                return view('resetpw');
+            }
+        }
+        return redirect()->route('lupapassword')->with('error', 'Link Expired');
+    }
+
+    public function postReset(Request $request)
+    {
+        $email = $request->email;
+        $token = $request->token;
+        $rules = [
+            'password' => 'required',
+            'confirmPassword' => 'required|same:password',
+        ];
+        $messages = [
+            'required' => 'Tolong :attribute di isi',
+            'confirmPassword.same' => 'Password haruslah sama',
+        ];
+        $valid = Validator::make($request->all(), $rules, $messages);
+        if ($valid->fails()) {
+            return redirect()->route('resetPass', ['email' => $email, 'token' => $token])->withErrors($valid)->withInput();
+        }
+        $user = User::where('email', $email)->first();
+        if (Hash::check($request->password, $user->password)) return redirect()->route('resetPass', ['email' => $email, 'token' => $token])->with('status', 'Password anda sama dengan sebelumnya, silahkan gunakan password yang lain');
+        $user->password = Hash::make($request->password);
+        $user->save();
+        PasswordReset::where('email', $email)->delete();
+        return redirect()->route('home')->with('success', 'Password berhasil diubah silahkan login');
     }
 }

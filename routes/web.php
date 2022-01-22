@@ -20,6 +20,13 @@ Route::get('confirm-email', [AuthController::class, 'confirm'])->name('confirm')
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('lupa-password', function() {
+    return view('lupapw');
+})->name('lupapassword');
+Route::post('lupa-password', [AuthController::class, 'lupapassword']);
+Route::get('reset-password', [AuthController::class, 'reset'])->name('resetPass');
+Route::post('reset-password', [AuthController::class, 'postReset']);
+
 Route::get('admin/login', function () {
     return view('admin.login');
 })->name('admin.login');

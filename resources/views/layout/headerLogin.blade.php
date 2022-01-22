@@ -86,6 +86,9 @@
                                                 </div>
 
                                                 <div class="row form-group">
+                                                    <a href="{{ route('lupapassword') }}" style="margin-bottom: 20px; text-align: left">Forgot Password</a>
+                                                </div>
+                                                <div class="row form-group">
                                                     <div class="col-md-12">
                                                         <input type="submit" class="btn btn-primary" value="Login">
                                                     </div>
