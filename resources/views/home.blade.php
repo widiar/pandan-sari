@@ -639,7 +639,9 @@ Home Pandan Sari Dive & Water Sport
 							addCart(pr, $(this).val())
 						}
 					})
-				} 
+				} else {
+					addCart(pr, $(this).val())
+				}
 			} else {
 				if($(this).val() <= 0){
 					deleteCart(pr)

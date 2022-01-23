@@ -133,7 +133,7 @@ class AdminController extends Controller
             $invoice = Invoice::where('status', 'payment-verifed')->whereMonth('updated_at', $bulan)->whereYear('updated_at', $tahun)->get();
             $invoice->load('user', 'cart');
             $pdf = PDF::loadView('admin.transaksi.pdf', compact('invoice'));
-            $pdf->setOption('header-html', view('admin.headerPdf'))->save('storage/laporan-transaksi/' . $filename);
+            $pdf->setOption('header-html', view('admin.headerPdf'))->setOption('footer-html', view('admin.footerPdf'))->save('storage/laporan-transaksi/' . $filename);
 
             LaporanTransaksi::create([
                 'file' => $filename,
@@ -200,8 +200,24 @@ class AdminController extends Controller
         return response()->json('Sukses');
     }
 
+    public function redeemBooking(Request $request, $id)
+    {
+        $data = Invoice::find($id);
+        if($request->value == 0){
+            $data->is_redeem = 1;
+        } else{
+            $data->is_redeem = 0;
+        }
+        $data->save();
+        return response()->json('Sukses');
+    }
+
     public function dev()
     {
-        //
+        $invoice = Invoice::where('status', 'payment-verifed')->whereMonth('updated_at', 1)->whereYear('updated_at', 2022)->get();
+        $invoice->load('user', 'cart');
+        $pdf = PDF::loadView('admin.transaksi.pdf', compact('invoice'));
+        $pdf->setOption('header-html', view('admin.headerPdf'));
+        return $pdf->setOption('footer-html', view('admin.footerPdf'))->stream();
     }
 }

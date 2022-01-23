@@ -148,7 +148,7 @@
         $('#balasPesanModal').modal('show')
     })
 
-    $('#form-approve').submit(function(e){
+    $('.actionz').on('submit', '#form-approve' ,function(e){
         e.preventDefault()
         let txt
         if($(this).data('text') == 'show') {

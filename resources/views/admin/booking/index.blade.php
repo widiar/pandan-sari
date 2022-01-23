@@ -117,7 +117,17 @@
                                 @csrf
                                 <button class="btn btn-sm btn-danger" type="submit"><i
                                         class="fas fa-trash"></i></button>
-                            </form>     
+                            </form>
+                            <form action="{{ route('admin.booking.redeem', $dt->id) }}" method="POST" class="redem mx-2" data-value="{{ $dt->is_redeem }}">
+                                @csrf
+                                @if($dt->is_redeem == 0)
+                                <button class="btn btn-sm btn-success" type="submit"><i
+                                        class="fas fa-calendar-check"></i></button>
+                                @else
+                                <button class="btn btn-sm btn-danger" type="submit"><i
+                                    class="fas fa-minus"></i></button>
+                                @endif
+                            </form>  
                         </div>
                     </td>
                     <td class="text-center">
@@ -127,6 +137,12 @@
                         <h3 class="badge badge-danger">Payment Rejected</h3>
                         @else
                         <h3 class="badge badge-success">Payment Verified</h3>
+                        @endif
+                        <br>
+                        @if($dt->is_redeem == 1)
+                        <h3 class="badge badge-success">Redeemed</h3>
+                        @else
+                        <h3 class="badge badge-info">Not Redeemed</h3>
                         @endif
                     </td>
                 </tr>
@@ -386,6 +402,57 @@
         e.preventDefault()
         const id = $(this).data('id')
         formSubmit($(this).attr('action'), id, 'approved')
+    })
+
+    $(document).on('submit', '.redem', function(e){
+        e.preventDefault()
+        let cekval = $(this).data('value')
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              $.ajax({
+                  url: $(this).attr('action'),
+                  method: 'POST',
+                  data: {
+                      value: cekval
+                  },
+                  beforeSend: () => {
+                    Swal.fire({
+                        text: 'Procesing',
+                        timer: 2000,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            Swal.stopTimer()
+                        }
+                    })
+                  },
+                  success: function(res){
+                    console.log(res)
+                    Swal.close()
+                    Swal.fire({
+                        title: 'Success!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        window.location.href = "";
+                    }) 
+                  },
+                  error: (res) => {
+                    Swal.fire("Oops", "Something Wrong!", "error");
+                    console.log(res.responseJSON)
+                  }
+              })
+            }
+        })
     })
 
 </script>

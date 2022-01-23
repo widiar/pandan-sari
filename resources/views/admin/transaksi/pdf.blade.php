@@ -28,7 +28,7 @@
 </head>
 
 <body
-    style="font-family: open sans, tahoma, sans-serif; margin: 0; -webkit-print-color-adjust: exact; padding-top: 10px;">
+    style="font-family: open sans, tahoma, sans-serif; margin: 0; -webkit-print-color-adjust: exact; padding: 30px;">
 
     <div class="content-area">
         @php

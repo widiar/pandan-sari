@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WaterSportController;
 
+Route::get('dev', [AdminController::class, 'dev']);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('booking', [BookingController::class, 'booking'])->name('booking');
 Route::get('gallery', [HomeController::class, 'gallery'])->name('gallery');
@@ -53,6 +54,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::post('booking/reject', [AdminController::class, 'rejectBooking'])->name('booking.reject');
             Route::post('booking/reject/alasan', [AdminController::class, 'rejectAlasanBooking'])->name('booking.reject.reason');
             Route::delete('booking/delete/{id}', [AdminController::class, 'destroyBooking'])->name('booking.destroy');
+            Route::post('booking/{id}/redeem', [AdminController::class, 'redeemBooking'])->name('booking.redeem');
 
             Route::get('transaksi', [AdminController::class, 'transaksi'])->name('transaksi');
             Route::post('transaksi/post', [AdminController::class, 'transaksiPost'])->name('transaksi.post');
