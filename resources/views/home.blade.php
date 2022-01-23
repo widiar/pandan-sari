@@ -670,7 +670,19 @@ Home Pandan Sari Dive & Water Sport
 							counter(pr, maksimal, 1)
 						}
 					})
-				} 
+				} else if($(this).val() < minimal) {
+					e.preventDefault()
+					Swal.fire({
+						icon: 'info',
+						title: 'Tiket',
+						html: `Tiket minimal ${minimal}`
+					}).then(res => {
+						if(res.isConfirmed) {
+							$(this).val(minimal)
+							counter(pr, $(this).val(), 1)
+						}
+					})
+				}
 				else {
 					counter(pr, $(this).val(), 1)
 				}
