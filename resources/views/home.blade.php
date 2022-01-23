@@ -621,6 +621,7 @@ Home Pandan Sari Dive & Water Sport
 			let pr = $(this).parent()
 			let parent = pr.parent()
 			const maksimal = parseInt(parent.data('maksimal'))
+			const minimal = parseInt(parent.data('minimal'))
 			let cek = parseInt($(this).val())
 			if(isNaN(cek)){
 				$(this).val(oldValueCounter)
@@ -636,6 +637,18 @@ Home Pandan Sari Dive & Water Sport
 					}).then(res => {
 						if(res.isConfirmed) {
 							$(this).val(maksimal)
+							addCart(pr, $(this).val())
+						}
+					})
+				} else if($(this).val() < minimal) {
+					e.preventDefault()
+					Swal.fire({
+						icon: 'info',
+						title: 'Tiket',
+						html: `Tiket minimal ${minimal}`
+					}).then(res => {
+						if(res.isConfirmed) {
+							$(this).val(minimal)
 							addCart(pr, $(this).val())
 						}
 					})
