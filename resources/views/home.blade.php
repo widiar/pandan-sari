@@ -692,24 +692,37 @@ Home Pandan Sari Dive & Water Sport
 
 		$('#form-identitas').submit(function(e){
 			e.preventDefault()
-			$.ajax({
-				url: $(this).attr('action'),
-				method: $(this).attr('method'),
-				data: $(this).serialize(),
-				success: (res) => {
-					if(res.status == 'Success') {
-						// $('#bayarModal').modal('hide')
-						// $('#transaksiModal').modal('show')
-						window.location.href = res.invoice.invoice_url
-					} else {
-						Swal.fire({
-							icon: 'info',
-							title: 'Tiket Sudah habis',
-							html: `Tiket untuk wahana <b>${res.wisata.join(', ')}</b> pada tanggal <b>${res.tanggal}</b> sudah habis`
-							// showConfirmButton: false,
-							// timer: 1500
-						})
-					}
+			Swal.fire({
+				title: 'Loading',
+				timer: 20000,
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+				didOpen: () => {
+					Swal.showLoading()
+					Swal.stopTimer()
+					$.ajax({
+						url: $(this).attr('action'),
+						method: $(this).attr('method'),
+						data: $(this).serialize(),
+						complete: () => {
+							Swal.close()
+						},
+						success: (res) => {
+							if(res.status == 'Success') {
+								// $('#bayarModal').modal('hide')
+								// $('#transaksiModal').modal('show')
+								window.location.href = res.invoice.invoice_url
+							} else {
+								Swal.fire({
+									icon: 'info',
+									title: 'Tiket Sudah habis',
+									html: `Tiket untuk wahana <b>${res.wisata.join(', ')}</b> pada tanggal <b>${res.tanggal}</b> sudah habis`
+									// showConfirmButton: false,
+									// timer: 1500
+								})
+							}
+						}
+					})
 				}
 			})
 		})
