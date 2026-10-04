@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Xendit\Xendit;
 use Xendit\Invoice as XenInv;
+use Illuminate\Support\Facades\Log;
 
 class BookingController extends Controller
 {
@@ -77,10 +78,10 @@ class BookingController extends Controller
         $isInput = $request->isInput;
         $cart = Cart::find($id);
         $watersport = WaterSport::find($cart->watersport_id);
-        if($isInput == 1) {
+        if ($isInput == 1) {
             $jml = $jumlah;
             $cart->jumlah = $jumlah;
-        }else{
+        } else {
             $jml = $cart->jumlah + $jumlah;
             $cart->jumlah = $jml;
         }
@@ -160,7 +161,7 @@ class BookingController extends Controller
 
         Xendit::setApiKey(env('XENDIT_SECRET_KEY'));
         $params = [
-            'external_id' => strtoupper($inv),
+            'external_id' => 'PANDAN_SARI-' . strtoupper($inv),
             'amount' => $invoice->total,
             'customer' => [
                 'given_names' => $user->nama,
@@ -168,10 +169,13 @@ class BookingController extends Controller
             ],
             'payer_email' => $user->email,
             'success_redirect_url' => route('home', ['callback' => Crypt::encryptString($invoice->id)]),
-            'currency' => 'IDR'
+            'currency' => 'IDR',
+            'metadata' => [
+                'app' => 'pandan_sari'
+            ]
         ];
         $xenInv = XenInv::create($params);
-        
+
         return response()->json([
             'status' => 'Success',
             'invoice' => $xenInv,
@@ -180,13 +184,15 @@ class BookingController extends Controller
 
     public function xenditInvoiceCallback(Request $request)
     {
+        Log::info("Masuk callback");
         $callbackToken = $request->header('x-callback-token');
-        if($callbackToken == env('XENDIT_CALLBACK_TOKEN')){
+        if ($callbackToken == env('XENDIT_CALLBACK_TOKEN')) {
             $responseArray = $request->json()->all();
+            Log::info($responseArray);
             $inv = Invoice::where('nomor', $responseArray['external_id'])
                 ->with(['user', 'cart'])
                 ->first();
-            if($inv){
+            if ($inv) {
                 Mail::to($inv->user->email)->send(new InvoiceMail($inv));
                 Mail::to(env('MAIL_CONTACT'))->send(new LaporanBookingMail($inv));
                 $inv->status = 'payment-verifed';
@@ -196,14 +202,14 @@ class BookingController extends Controller
                     'status' => 'success',
                     'message' => 'Sucess',
                     'data' => $inv
-                ]);            
-            }else{
+                ]);
+            } else {
                 return response()->json([
                     'status' => 'failed',
                     'message' => 'Invoice Not Found',
-                ]);            
+                ]);
             }
-        }else{
+        } else {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Wrong callback token'

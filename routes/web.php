@@ -21,7 +21,7 @@ Route::get('confirm-email', [AuthController::class, 'confirm'])->name('confirm')
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('lupa-password', function() {
+Route::get('lupa-password', function () {
     return view('lupapw');
 })->name('lupapassword');
 Route::post('lupa-password', [AuthController::class, 'lupapassword']);
@@ -37,7 +37,7 @@ Route::get('detail/{id}', [HomeController::class, 'detail'])->name('detail');
 
 Route::post('check/email', [AuthController::class, 'emailCheck'])->name('check.email');
 
-Route::get('callback-xendit', [BookingController::class, 'xenditInvoiceCallback']);
+Route::post('callback-xendit', [BookingController::class, 'xenditInvoiceCallback']);
 
 //admin
 Route::middleware(['auth', 'admin'])->group(function () {

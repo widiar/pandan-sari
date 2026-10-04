@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -22,13 +23,14 @@ class HomeController extends Controller
     {
         // dd(date('Y-m-d'));
         //callback invoice local
-        if(isset($request->callback)){
+        Log::info("TEST LOG");
+        if (isset($request->callback)) {
             $invnumber = Crypt::decryptString($request->callback);
             $inv = Invoice::where('id', $invnumber)->first();
             $request->session()->flash('callback-success', 'Pembayaran Berhasil');
-            if($inv){
+            if ($inv) {
                 //kirim email dll
-                if(env('APP_ENV') == 'local') {
+                if (env('APP_ENV') == 'local') {
                     Mail::to($inv->user->email)->send(new InvoiceMail($inv));
                     Mail::to(env('MAIL_CONTACT'))->send(new LaporanBookingMail($inv));
                     $inv->status = 'payment-verifed';
@@ -37,7 +39,7 @@ class HomeController extends Controller
                 }
                 $request->session()->flash('callback-success', 'Pembayaran Berhasil');
             }
-        } else{
+        } else {
             $request->session()->forget('callback-success');
         }
 
